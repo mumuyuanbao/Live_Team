@@ -30,6 +30,9 @@ public class PageVO<T> {
     @ApiModelProperty(value = "当前页的数量", required = true)
     private Integer size = BizConstant.PAGE_SIZE_20;//
 
+    @ApiModelProperty(value = "总页数",required = true)
+    private Integer pages ;
+
     @ApiModelProperty(value = "数据", required = true)
     private List<T> data;// 查询结果
 
@@ -41,7 +44,7 @@ public class PageVO<T> {
         this.currentPage=pageinfo.getPageNum();//设置当前页
         this.totalCount=pageinfo.getTotal();     //设置总记录数
         this.size=pageinfo.getSize();//当前页数量
-
+        this.pages=pageinfo.getPages();
     }
 
     public PageVO() {}
@@ -63,6 +66,14 @@ public class PageVO<T> {
     public void setPageInfo(PageInfo<T> pageinfo){
 
 
+    }
+
+    public Integer getPages() {
+        return pages;
+    }
+
+    public void setPages(Integer pages) {
+        this.pages = pages;
     }
 
     public long getTotalCount() {
