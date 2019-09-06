@@ -11,7 +11,6 @@ import com.live.liveteam.common.result.SimpleResultVO;
 import com.live.liveteam.common.exception.BizException;
 import com.live.liveteam.common.result.ResultVO;
 import com.live.liveteam.common.utils.MD5Utils;
-import com.live.liveteam.common.utils.Page;
 import com.live.liveteam.common.utils.RedisUtil;
 import com.live.liveteam.common.utils.WechatUtil;
 import com.live.liveteam.entity.User;
@@ -175,7 +174,7 @@ public class UserController {
         ResultVO<PageVO<User>> result = new ResultVO<>();
         PageVO<User> page = new PageVO<>();
         UserExample userExample = new UserExample();
-        PageHelper.startPage(2,5);
+        PageHelper.startPage(3,5);
         List<User> list = userMapper.selectByExample(userExample);
         PageInfo<User> pageInfo = new PageInfo<>(list);
         page.setData(list);

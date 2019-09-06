@@ -11,7 +11,7 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * 采用MD5加密解密
  *
- * @author guoaq
+ * @author linyuanbao
  */
 public class MD5Utils {
 

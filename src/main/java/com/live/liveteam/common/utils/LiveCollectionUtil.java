@@ -11,7 +11,7 @@ import org.springframework.util.CollectionUtils;
 /**
  * 集合工具类
  * 
- * @author zhangyang
+ * @author linyuanbao
  * @date 2018/10/09
  */
 public class LiveCollectionUtil {

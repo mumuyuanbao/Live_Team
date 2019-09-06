@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
  * ClassName: ValidationUtils
  * Function:  参数校验工具
  * Date:      2018-11-19 14:40
- * author     likaixuan
+ * author     linyuanbao
  * version    V1.0
  */
 public class ValidationUtils {
@@ -16,7 +16,7 @@ public class ValidationUtils {
      * @Function 判断是否是手机号
      * @author   likaixuan
      * @Date     2018-11-19 14:41
-     * @param    [phone]
+     * @param
      * @return   boolean
      */
     public static boolean isPhone(String phone) {

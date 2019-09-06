@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * 分页对象
  * 
- * @author zhangyang
+ * @author linyuanbao
  * @date 2018/10/09
  */
 public class Page<T> implements Serializable {
