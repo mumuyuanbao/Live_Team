@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiParam;
  * 时间2019-09-05 16:37
  * 描述：图片返回实体类
  */
-public class UploadVo {
+public class UploadVO {
 
     @ApiModelProperty(value = "文件路径")
     private String url;

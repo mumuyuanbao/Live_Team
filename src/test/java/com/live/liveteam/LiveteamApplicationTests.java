@@ -31,7 +31,6 @@ public class LiveteamApplicationTests {
     public void contextLoads() {
         User user = new User();
         Date date = new Date();
-        user.setCreateTime(date);
         user.setNickName("zhangsn方法");
         user.setCity("杭州");
         List<User> list = new ArrayList<>();
