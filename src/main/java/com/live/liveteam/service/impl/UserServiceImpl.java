@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public ResultVO<User> login(String code, String rawData, String signature, Byte userIdevice, HttpServletRequest request) {
+    public ResultVO<User> login(String code, String rawData, String signature, Integer userIdevice, HttpServletRequest request) {
         ResultVO<User> result = new ResultVO<>();
         // 用户非敏感信息：rawData
         // 签名：signature
@@ -98,7 +98,6 @@ public class UserServiceImpl implements UserService {
                 user.setProvince(province);
                 user.setCountry(country);
                 user.setAvatarUrl(avatarUrl);
-                user.setGender((byte) Integer.parseInt(gender));
                 user.setNickName(nickName);
                 /*设置其他实体类属性*/
 
@@ -215,7 +214,7 @@ public class UserServiceImpl implements UserService {
         user.setOpenId(user2.getOpenId());
         if (user2.getUserIsNot() == 0) {
             user.setUserBirthday(req.getUserBirthday());
-            user.setUserIsNot((byte) 1);
+            user.setUserIsNot(1);
         }
         //想数据库更新userinfo具体值
         int count = userMapper.updateByPrimaryKeySelective(user);

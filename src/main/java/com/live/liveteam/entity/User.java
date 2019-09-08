@@ -4,8 +4,10 @@ import com.live.liveteam.common.utils.DateUtils;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.io.Serializable;
+
 @ApiModel("会员实体类")
-public class User {
+public class User implements Serializable {
     @ApiModelProperty("用户唯一标识openid")
     private String openId;
     @ApiModelProperty("sessionkey")
@@ -19,7 +21,7 @@ public class User {
     @ApiModelProperty("头像地址")
     private String avatarUrl;
     @ApiModelProperty("性别 0-女 1-男")
-    private Byte gender;
+    private Integer gender;
     @ApiModelProperty("年龄")
     private Integer age;
     @ApiModelProperty("邮箱")
@@ -39,13 +41,11 @@ public class User {
     @ApiModelProperty("用户二维码URL")
     private String qrCodeUrl;
     @ApiModelProperty("最近登录设备 0-PC 1-移动H5 2-微信 3-安卓 4-IOS")
-    private Byte userIdevice;
+    private Integer userIdevice;
     @ApiModelProperty("会员类型 0-青铜会员 1-白银会员 2-白金会员 ")
-    private Byte userForm;
-    @ApiModelProperty("用户总积分")
-    private Long userCountNum;
+    private Integer userForm;
     @ApiModelProperty("用户生日是否可修改  默认只能修改一次 0-可修改 1不可修改")
-    private Byte userIsNot;
+    private Integer userIsNot;
     @ApiModelProperty("用户最后登录IP")
     private String userLastIp;
     @ApiModelProperty("用户登录总次数")
@@ -65,7 +65,7 @@ public class User {
         user.setProvince("");
         user.setCountry("");
         user.setAvatarUrl("");
-        user.setGender((byte) 0);
+        user.setGender(0);
         user.setAge(0);
         user.setUserEmail("");
         user.setNickName(String.valueOf(DateUtils.getTimeStamp()));
@@ -73,19 +73,18 @@ public class User {
         user.setUserIphone("");
         user.setRealname("");
         user.setQrCodeUrl("");
-        user.setUserIdevice((byte) 1);
-        user.setUserForm((byte)0);
-        user.setUserIsNot((byte) 0);
+        user.setUserIdevice( 1);
+        user.setUserForm(0);
+        user.setUserIsNot( 0);
         user.setUserLastIp("");
         user.setUserLoginNum(1l);
-        user.setUserCountNum(0l);
         user.setUserLoginAddress("");
         user.setCreateTime(DateUtils.getTimeStamp());
         user.setLastVisitTime(DateUtils.getTimeStamp());
         return  user;
     }
 
-    public User(String openId, String sessionKey, String city, String province, String country, String avatarUrl, Byte gender, Integer age, String userEmail, String nickName, Long userPostal, Long userBirthday, String userIphone, String realname, String cardId, String qrCodeUrl, Byte userIdevice, Byte userForm, Long userCountNum, Byte userIsNot, String userLastIp, Long userLoginNum, String userLoginAddress, Long createTime, Long lastVisitTime) {
+    public User(String openId, String sessionKey, String city, String province, String country, String avatarUrl, Integer gender, Integer age, String userEmail, String nickName, Long userPostal, Long userBirthday, String userIphone, String realname, String cardId, String qrCodeUrl, Integer userIdevice, Integer userForm, Long userCountNum, Integer userIsNot, String userLastIp, Long userLoginNum, String userLoginAddress, Long createTime, Long lastVisitTime) {
         this.openId = openId;
         this.sessionKey = sessionKey;
         this.city = city;
@@ -104,7 +103,6 @@ public class User {
         this.qrCodeUrl = qrCodeUrl;
         this.userIdevice = userIdevice;
         this.userForm = userForm;
-        this.userCountNum = userCountNum;
         this.userIsNot = userIsNot;
         this.userLastIp = userLastIp;
         this.userLoginNum = userLoginNum;
@@ -122,7 +120,7 @@ public class User {
     }
 
     public void setOpenId(String openId) {
-        this.openId = openId == null ? null : openId.trim();
+        this.openId = openId;
     }
 
     public String getSessionKey() {
@@ -130,7 +128,7 @@ public class User {
     }
 
     public void setSessionKey(String sessionKey) {
-        this.sessionKey = sessionKey == null ? null : sessionKey.trim();
+        this.sessionKey = sessionKey;
     }
 
     public String getCity() {
@@ -138,7 +136,7 @@ public class User {
     }
 
     public void setCity(String city) {
-        this.city = city == null ? null : city.trim();
+        this.city = city;
     }
 
     public String getProvince() {
@@ -146,7 +144,7 @@ public class User {
     }
 
     public void setProvince(String province) {
-        this.province = province == null ? null : province.trim();
+        this.province = province;
     }
 
     public String getCountry() {
@@ -154,7 +152,7 @@ public class User {
     }
 
     public void setCountry(String country) {
-        this.country = country == null ? null : country.trim();
+        this.country = country;
     }
 
     public String getAvatarUrl() {
@@ -162,14 +160,14 @@ public class User {
     }
 
     public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl == null ? null : avatarUrl.trim();
+        this.avatarUrl = avatarUrl;
     }
 
-    public Byte getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(Byte gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 
@@ -186,7 +184,7 @@ public class User {
     }
 
     public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail == null ? null : userEmail.trim();
+        this.userEmail = userEmail;
     }
 
     public String getNickName() {
@@ -194,7 +192,7 @@ public class User {
     }
 
     public void setNickName(String nickName) {
-        this.nickName = nickName == null ? null : nickName.trim();
+        this.nickName = nickName;
     }
 
     public Long getUserPostal() {
@@ -217,16 +215,8 @@ public class User {
         return userIphone;
     }
 
-    public Long getUserCountNum() {
-        return userCountNum;
-    }
-
-    public void setUserCountNum(Long userCountNum) {
-        this.userCountNum = userCountNum;
-    }
-
     public void setUserIphone(String userIphone) {
-        this.userIphone = userIphone == null ? null : userIphone.trim();
+        this.userIphone = userIphone;
     }
 
     public String getRealname() {
@@ -234,7 +224,7 @@ public class User {
     }
 
     public void setRealname(String realname) {
-        this.realname = realname == null ? null : realname.trim();
+        this.realname = realname;
     }
 
     public String getCardId() {
@@ -242,7 +232,7 @@ public class User {
     }
 
     public void setCardId(String cardId) {
-        this.cardId = cardId == null ? null : cardId.trim();
+        this.cardId = cardId;
     }
 
     public String getQrCodeUrl() {
@@ -250,30 +240,30 @@ public class User {
     }
 
     public void setQrCodeUrl(String qrCodeUrl) {
-        this.qrCodeUrl = qrCodeUrl == null ? null : qrCodeUrl.trim();
+        this.qrCodeUrl = qrCodeUrl;
     }
 
-    public Byte getUserIdevice() {
+    public Integer getUserIdevice() {
         return userIdevice;
     }
 
-    public void setUserIdevice(Byte userIdevice) {
+    public void setUserIdevice(Integer userIdevice) {
         this.userIdevice = userIdevice;
     }
 
-    public Byte getUserForm() {
+    public Integer getUserForm() {
         return userForm;
     }
 
-    public void setUserForm(Byte userForm) {
+    public void setUserForm(Integer userForm) {
         this.userForm = userForm;
     }
 
-    public Byte getUserIsNot() {
+    public Integer getUserIsNot() {
         return userIsNot;
     }
 
-    public void setUserIsNot(Byte userIsNot) {
+    public void setUserIsNot(Integer userIsNot) {
         this.userIsNot = userIsNot;
     }
 
@@ -282,7 +272,7 @@ public class User {
     }
 
     public void setUserLastIp(String userLastIp) {
-        this.userLastIp = userLastIp == null ? null : userLastIp.trim();
+        this.userLastIp = userLastIp;
     }
 
     public Long getUserLoginNum() {
@@ -298,7 +288,7 @@ public class User {
     }
 
     public void setUserLoginAddress(String userLoginAddress) {
-        this.userLoginAddress = userLoginAddress == null ? null : userLoginAddress.trim();
+        this.userLoginAddress = userLoginAddress;
     }
 
     public Long getCreateTime() {

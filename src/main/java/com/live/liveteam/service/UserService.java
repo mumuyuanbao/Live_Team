@@ -12,7 +12,7 @@ public interface UserService {
 
     SimpleResultVO updateUserInfo(UpdateUserReq req,String token);
 
-    ResultVO<User> login(String code, String rawData, String signature, Byte userIdevice, HttpServletRequest request);
+    ResultVO<User> login(String code, String rawData, String signature, Integer userIdevice, HttpServletRequest request);
 
     ResultVO<UpdateUserVO> toQueryUserInfo(String token);
 

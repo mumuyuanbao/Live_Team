@@ -17,7 +17,7 @@ public class UpdateUserReq {
      * 性别
      */
     @ApiModelProperty(value = "性别0-女 1-男", required = true)
-    private Byte gender;
+    private Integer gender;
     /**
      * 网名
      */
@@ -37,11 +37,11 @@ public class UpdateUserReq {
         this.avatarUrl = avatarUrl;
     }
 
-    public Byte getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(Byte gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 

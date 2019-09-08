@@ -6,11 +6,13 @@ import com.live.liveteam.common.enums.EnumResult;
 import com.live.liveteam.common.result.ResultVO;
 import com.live.liveteam.common.utils.FastDfsUtil;
 import com.live.liveteam.vo.UploadVO;
+import io.swagger.annotations.Api;
 import org.csource.common.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -20,7 +22,8 @@ import java.io.IOException;
  * 时间2019-09-03 20:49
  * 描述：
  */
-@Controller
+@Api(description = "上传文件接口")
+@RestController
 @RequestMapping("upload")
 public class UploadController {
 

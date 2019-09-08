@@ -43,6 +43,11 @@ public class BizConstant {
     public static final Integer PARENT_ID_ZERO_INTEGER = 0;
 
     /**
+     * 每页显示1条
+     */
+    public static final Byte IS_SHOW = 1;
+
+    /**
      * 菜单根节点名称
      */
     public static final String ROOT_MENU_NAME = "根目录";

@@ -68,18 +68,19 @@ public class UserController {
     public ResultVO<User> user_login(@RequestParam(value = "code", required = true) String code,
                                      @RequestParam(value = "rawData", required = false) String rawData,
                                      @RequestParam(value = "signature", required = false) String signature,
-                                     @RequestParam(value = "userIdevice", required = true) Byte userIdevice, HttpServletRequest request
+                                     @RequestParam(value = "userIdevice", required = true) Integer userIdevice, HttpServletRequest request
     ) {
         return userService.login(code, rawData, signature, userIdevice, request);
     }
 
 
     /**
-     * 获取用户公开信息
+     * 获取用户信息
      */
+    @ApiOperation(value = "获取用户信息")
     @GetMapping("QureyUserInfo")
-    @ApiImplicitParam(name = "token", value = "查询用户信息", dataType = "String", paramType = "query")
-    public ResultVO<User> QureyUserInfo(String token) {
+    @ApiImplicitParam(name = "token", value = "token", dataType = "String", paramType = "query")
+    public ResultVO<User> QureyUserInfo(@RequestParam(value = "token",required = true) String token) {
 //        User user = userMapper.selectByPrimaryKey(token);
         ResultVO<User> result = new ResultVO<User>();
         if (token != null) {
@@ -104,7 +105,8 @@ public class UserController {
      */
     @GetMapping("toQueryUserInfo")
     @ApiOperation(value = "到用户修改信息")
-    public ResultVO<UpdateUserVO> toQueryUser(String token) {
+    @ApiImplicitParam(name = "token", value = "token", dataType = "String", paramType = "query")
+    public ResultVO<UpdateUserVO> toQueryUser(@RequestParam(value = "token",required = true)String token) {
         return userService.toQueryUserInfo(token);
     }
 
@@ -117,16 +119,6 @@ public class UserController {
     @ApiOperation(value = "修改用户信息")
     public SimpleResultVO updateUserInfo(@RequestBody UpdateUserReq req, String token) {
         return userService.updateUserInfo(req, token);
-    }
-
-
-    /**
-     * 绑定手机号
-     */
-    @GetMapping("bindingPhone")
-    @ApiOperation(value = "修改用户信息")
-    public SimpleResultVO InsertUserPhone(String phone,String token) {
-        return userService.inseryUserPhone(phone, token);
     }
 
     /**
