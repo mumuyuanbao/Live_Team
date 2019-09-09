@@ -128,7 +128,17 @@ public enum EnumResult {
     NO_EXIST_ORDER(1003012,"订单不存在"),
     ORDER_FOR_COMPLETION(1003013,"订单未完成"),
 
-    REQUIRED_PARAMETER_IP_ERROR(1004000,"请求IP错误，请检查网络环境")
+    REQUIRED_PARAMETER_IP_ERROR(1004000,"请求IP错误，请检查网络环境"),
+
+    // -------------------------积分相关-------------------------
+    // 积分插入数据库失败
+    SCORE_INSERT_DATABASE_FAIL(200001, "积分明细插入数据库失败"),
+
+    // 对Redis中的总积分修改失败
+    SCORE_INSERT_REDIS_FAIL(200002, "积分信息更新到Redis失败"),
+
+    // 查找用户积分信息失败
+    SCORE_FIND_USER_FAIL(200003, "用户无总积分或用户不存在")
 
     ;
 

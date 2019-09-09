@@ -11,6 +11,9 @@ public class UserScoreDetail {
 
     private Long scoreGetTime;
 
+    public UserScoreDetail() {
+    }
+
     public UserScoreDetail(Long id, String openId, Integer scoreValue, String scoreGetWay, Long scoreGetTime) {
         this.id = id;
         this.openId = openId;
