@@ -23,6 +23,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.lang.model.element.VariableElement;
 import java.util.ArrayList;
@@ -147,7 +148,7 @@ public class OrdersServiceImpl implements OrdersService {
             orders.setOrderCancelCause(orderCancelCause);
         }
 
-        //取消订单-激活已使用优惠券返回用户
+        //取消订单-判断优惠券是否过期，无过期激活已使用优惠券返回用户
 
         //取消订单-返回订单使用积分
 
@@ -199,6 +200,7 @@ public class OrdersServiceImpl implements OrdersService {
      * @return
      */
     @Override
+    @Transactional
     public SimpleResultVO insertOrder(String openId, Integer addressId, Long priceTotal, String couponsIds, Long orderScore, Long orderCouponsPrice, String goodsId, String goodsNum, String goodsUrls) {
         SimpleResultVO result = new SimpleResultVO();
         Orders orders = Orders.newUserEntity();
@@ -246,8 +248,22 @@ public class OrdersServiceImpl implements OrdersService {
             orderDetails.setgId(gIds.get(i));
             orderDetails.setGoodsUrl(gUrls.get(i));
             orderDetails.setgNum(gNum.get(i));
+            //根据商品ID查询商品名称跟
             //判断该商品是否使用优惠券，该商品优惠金额*****
+            orderDetailsMapper.insert(orderDetails);
+
         }
+
+        //修改优惠券状态为已使用
+        List<Long> couIds = LiveStringUtil.splitToLong(couponsIds, ",");
+        for (Long couId : couIds) {
+            //设置为已使用
+
+        }
+        //扣除用户积分
+
+
+
 
 
 
