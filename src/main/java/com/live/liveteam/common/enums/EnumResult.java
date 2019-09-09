@@ -125,8 +125,8 @@ public enum EnumResult {
     // 订单收货地址
     NO_RECEIVING_ADDRESS_EXISTS(1003011,"不存在收货地址"),
 
-
-
+    NO_EXIST_ORDER(1003012,"订单不存在"),
+    ORDER_FOR_COMPLETION(1003013,"订单未完成"),
 
     REQUIRED_PARAMETER_IP_ERROR(1004000,"请求IP错误，请检查网络环境")
 
