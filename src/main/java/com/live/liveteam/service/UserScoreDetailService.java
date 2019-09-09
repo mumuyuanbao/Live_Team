@@ -1,6 +1,8 @@
 package com.live.liveteam.service;
 
+import com.live.liveteam.common.enums.EnumScoreDetailInfo;
 import com.live.liveteam.common.result.SimpleResultVO;
+import com.live.liveteam.entity.User;
 import com.live.liveteam.entity.UserScoreDetail;
 
 import java.util.List;
@@ -16,6 +18,9 @@ public interface UserScoreDetailService {
 
     List<UserScoreDetail> queryAll();
 
-    SimpleResultVO insertScoreDetail(UserScoreDetail userScoreDetail);
+    Integer queryTotalScore(String openId);
+
+    SimpleResultVO insertScoreDetail(User user, EnumScoreDetailInfo info, Integer value);
+
 
 }

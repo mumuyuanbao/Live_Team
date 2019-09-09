@@ -83,15 +83,7 @@ public class UserController {
     public ResultVO<User> QureyUserInfo(@RequestParam(value = "token",required = true) String token) {
 //        User user = userMapper.selectByPrimaryKey(token);
         ResultVO<User> result = new ResultVO<User>();
-        if (token != null) {
-            throw new BizException(EnumResult.USER_TOKEN_NULL.getCode(), EnumResult.USER_TOKEN_NULL.getMsg());
-        }
-        Object userInfo = redisUtil.get(RedisUtil.LOGIN_USER_STRING + token);
-        if (userInfo == null) {
-            throw new BizException(EnumResult.USER_TOKEN_LOSE.getCode(), EnumResult.USER_TOKEN_LOSE.getMsg());
-        }
-        String s = JSON.toJSONString(userInfo);
-        User user = JSONObject.parseObject(s, User.class);
+        User user = UserUtil.loginCheck(token);
         //        User user = JSON.parseObject((String) o,User.class);
 
         result.setData(user);
