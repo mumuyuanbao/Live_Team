@@ -6,6 +6,7 @@ import com.live.liveteam.common.exception.BizException;
 import com.live.liveteam.common.result.SimpleResultVO;
 import com.live.liveteam.common.utils.DateUtils;
 import com.live.liveteam.common.utils.RedisUtil;
+import com.live.liveteam.common.utils.UserUtil;
 import com.live.liveteam.entity.User;
 import com.live.liveteam.entity.UserScoreDetail;
 import com.live.liveteam.entity.UserScoreDetailExample;
@@ -24,6 +25,7 @@ import java.util.List;
 @Service
 public class UserScoreDetailServiceImpl implements UserScoreDetailService {
 
+    @Autowired
     private RedisUtil redisUtil;
 
     @Autowired
@@ -32,16 +34,16 @@ public class UserScoreDetailServiceImpl implements UserScoreDetailService {
     /**
      * (前端)返回该用户所有的积分明细信息
      *
-     * @param openId 传入的用户openId
+     * @param token
      * @return 用户积分明细 可能为null
      */
     @Override
-    public List<UserScoreDetail> queryScoreDetailByOpenId(String openId) {
+    public List<UserScoreDetail> queryScoreDetailByOpenId(String token) {
+        User user = UserUtil.loginCheck(token);
         UserScoreDetailExample example = new UserScoreDetailExample();
         UserScoreDetailExample.Criteria criteria = example.createCriteria();
-        criteria.andOpenIdEqualTo(openId);
+        criteria.andOpenIdEqualTo(user.getOpenId());
         List<UserScoreDetail> details = userScoreDetailMapper.selectByExample(example);
-        System.out.println("details = " + details);
         return details;
     }
 
@@ -53,7 +55,6 @@ public class UserScoreDetailServiceImpl implements UserScoreDetailService {
     @Override
     public List<UserScoreDetail> queryAll() {
         List<UserScoreDetail> userScoreDetails = userScoreDetailMapper.selectByExample(null);
-        System.out.println(userScoreDetails);
         return userScoreDetails;
     }
 

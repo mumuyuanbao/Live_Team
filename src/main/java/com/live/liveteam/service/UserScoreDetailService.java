@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface UserScoreDetailService {
 
-    List<UserScoreDetail> queryScoreDetailByOpenId(String openId);
+    List<UserScoreDetail> queryScoreDetailByOpenId(String token);
 
     List<UserScoreDetail> queryAll();
 

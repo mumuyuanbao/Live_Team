@@ -38,14 +38,12 @@ public class UserScoreDetailController {
      */
     @GetMapping("QureyScoreDetail")
     @ApiOperation(value = "返回单个用户的积分明细信息")
-    @ApiImplicitParam(name = "token", value = "", dataType = "String", paramType = "query")
     public ResultVO<List<UserScoreDetail>> queryUserScoreDetail(@RequestParam(value = "token", required = true) String token) {
         ResultVO<List<UserScoreDetail>> result = new ResultVO<>();
-        User user = UserUtil.loginCheck(token);
-        List<UserScoreDetail> details = userScoreDetailService.queryScoreDetailByOpenId(user.getOpenId());
+        List<UserScoreDetail> details = userScoreDetailService.queryScoreDetailByOpenId(token);
         result.setData(details);
-        result.setCode(EnumResult.SUCCESS.getCode());
         result.setMsg(EnumResult.SUCCESS.getMsg());
+        result.setCode(EnumResult.SUCCESS.getCode());
         return result;
     }
 
