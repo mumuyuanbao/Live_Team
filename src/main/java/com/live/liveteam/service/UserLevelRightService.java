@@ -8,6 +8,6 @@ import com.live.liveteam.entity.UserLevelRight;
  * description:
  */
 public interface UserLevelRightService {
-    UserLevelRight selectUserLevel(String openid);
+    UserLevelRight queryUserLevel(String openid);
 
 }
