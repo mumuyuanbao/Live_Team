@@ -5,8 +5,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.live.liveteam.common.enums.EnumScoreDetailInfo;
 import com.live.liveteam.common.utils.RedisUtil;
 import com.live.liveteam.entity.User;
+import com.live.liveteam.service.UserScoreDetailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,15 @@ public class LiveteamApplicationTests {
     @Autowired
     private RedisUtil redisUtil;
 
+    @Autowired
+    private UserScoreDetailService userScoreDetailService;
 
+    @Test
+    public void testS() {
+        User user = new User();
+        user.setOpenId("2");
+        userScoreDetailService.insertScoreDetail(user, EnumScoreDetailInfo.GET_FROM_INVITE_USER, -50);
+    }
 
     @Test
     public void contextLoads() {
