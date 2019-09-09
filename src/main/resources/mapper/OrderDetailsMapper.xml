@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.live.liveteam.mapper.OrderDetailsMapper" >
+  <resultMap id="BaseResultMap" type="com.live.liveteam.entity.OrderDetails" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="order_num" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="open_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="address_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="g_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="order_price" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="order_price_coupons" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="g_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="g_price" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="g_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="g_price_count" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="goods_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, order_num, open_id, address_id, g_id, order_price, order_price_coupons, g_name, 
+    g_price, g_num, g_price_count, goods_url
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.live.liveteam.entity.OrderDetailsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from order_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_details
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order_details
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.live.liveteam.entity.OrderDetailsExample" >
+    delete from order_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.live.liveteam.entity.OrderDetails" >
+    insert into order_details (id, order_num, open_id, 
+      address_id, g_id, order_price, 
+      order_price_coupons, g_name, g_price, 
+      g_num, g_price_count, goods_url
+      )
+    values (#{id,jdbcType=BIGINT}, #{orderNum,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
+      #{addressId,jdbcType=BIGINT}, #{gId,jdbcType=BIGINT}, #{orderPrice,jdbcType=BIGINT}, 
+      #{orderPriceCoupons,jdbcType=BIGINT}, #{gName,jdbcType=VARCHAR}, #{gPrice,jdbcType=BIGINT}, 
+      #{gNum,jdbcType=INTEGER}, #{gPriceCount,jdbcType=BIGINT}, #{goodsUrl,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.live.liveteam.entity.OrderDetails" >
+    insert into order_details
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="addressId != null" >
+        address_id,
+      </if>
+      <if test="gId != null" >
+        g_id,
+      </if>
+      <if test="orderPrice != null" >
+        order_price,
+      </if>
+      <if test="orderPriceCoupons != null" >
+        order_price_coupons,
+      </if>
+      <if test="gName != null" >
+        g_name,
+      </if>
+      <if test="gPrice != null" >
+        g_price,
+      </if>
+      <if test="gNum != null" >
+        g_num,
+      </if>
+      <if test="gPriceCount != null" >
+        g_price_count,
+      </if>
+      <if test="goodsUrl != null" >
+        goods_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="addressId != null" >
+        #{addressId,jdbcType=BIGINT},
+      </if>
+      <if test="gId != null" >
+        #{gId,jdbcType=BIGINT},
+      </if>
+      <if test="orderPrice != null" >
+        #{orderPrice,jdbcType=BIGINT},
+      </if>
+      <if test="orderPriceCoupons != null" >
+        #{orderPriceCoupons,jdbcType=BIGINT},
+      </if>
+      <if test="gName != null" >
+        #{gName,jdbcType=VARCHAR},
+      </if>
+      <if test="gPrice != null" >
+        #{gPrice,jdbcType=BIGINT},
+      </if>
+      <if test="gNum != null" >
+        #{gNum,jdbcType=INTEGER},
+      </if>
+      <if test="gPriceCount != null" >
+        #{gPriceCount,jdbcType=BIGINT},
+      </if>
+      <if test="goodsUrl != null" >
+        #{goodsUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.live.liveteam.entity.OrderDetailsExample" resultType="java.lang.Integer" >
+    select count(*) from order_details
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order_details
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderNum != null" >
+        order_num = #{record.orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openId != null" >
+        open_id = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressId != null" >
+        address_id = #{record.addressId,jdbcType=BIGINT},
+      </if>
+      <if test="record.gId != null" >
+        g_id = #{record.gId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderPrice != null" >
+        order_price = #{record.orderPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderPriceCoupons != null" >
+        order_price_coupons = #{record.orderPriceCoupons,jdbcType=BIGINT},
+      </if>
+      <if test="record.gName != null" >
+        g_name = #{record.gName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gPrice != null" >
+        g_price = #{record.gPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.gNum != null" >
+        g_num = #{record.gNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.gPriceCount != null" >
+        g_price_count = #{record.gPriceCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsUrl != null" >
+        goods_url = #{record.goodsUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order_details
+    set id = #{record.id,jdbcType=BIGINT},
+      order_num = #{record.orderNum,jdbcType=VARCHAR},
+      open_id = #{record.openId,jdbcType=VARCHAR},
+      address_id = #{record.addressId,jdbcType=BIGINT},
+      g_id = #{record.gId,jdbcType=BIGINT},
+      order_price = #{record.orderPrice,jdbcType=BIGINT},
+      order_price_coupons = #{record.orderPriceCoupons,jdbcType=BIGINT},
+      g_name = #{record.gName,jdbcType=VARCHAR},
+      g_price = #{record.gPrice,jdbcType=BIGINT},
+      g_num = #{record.gNum,jdbcType=INTEGER},
+      g_price_count = #{record.gPriceCount,jdbcType=BIGINT},
+      goods_url = #{record.goodsUrl,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.live.liveteam.entity.OrderDetails" >
+    update order_details
+    <set >
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="addressId != null" >
+        address_id = #{addressId,jdbcType=BIGINT},
+      </if>
+      <if test="gId != null" >
+        g_id = #{gId,jdbcType=BIGINT},
+      </if>
+      <if test="orderPrice != null" >
+        order_price = #{orderPrice,jdbcType=BIGINT},
+      </if>
+      <if test="orderPriceCoupons != null" >
+        order_price_coupons = #{orderPriceCoupons,jdbcType=BIGINT},
+      </if>
+      <if test="gName != null" >
+        g_name = #{gName,jdbcType=VARCHAR},
+      </if>
+      <if test="gPrice != null" >
+        g_price = #{gPrice,jdbcType=BIGINT},
+      </if>
+      <if test="gNum != null" >
+        g_num = #{gNum,jdbcType=INTEGER},
+      </if>
+      <if test="gPriceCount != null" >
+        g_price_count = #{gPriceCount,jdbcType=BIGINT},
+      </if>
+      <if test="goodsUrl != null" >
+        goods_url = #{goodsUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.live.liveteam.entity.OrderDetails" >
+    update order_details
+    set order_num = #{orderNum,jdbcType=VARCHAR},
+      open_id = #{openId,jdbcType=VARCHAR},
+      address_id = #{addressId,jdbcType=BIGINT},
+      g_id = #{gId,jdbcType=BIGINT},
+      order_price = #{orderPrice,jdbcType=BIGINT},
+      order_price_coupons = #{orderPriceCoupons,jdbcType=BIGINT},
+      g_name = #{gName,jdbcType=VARCHAR},
+      g_price = #{gPrice,jdbcType=BIGINT},
+      g_num = #{gNum,jdbcType=INTEGER},
+      g_price_count = #{gPriceCount,jdbcType=BIGINT},
+      goods_url = #{goodsUrl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

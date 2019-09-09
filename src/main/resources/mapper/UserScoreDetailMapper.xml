@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.live.liveteam.mapper.UserScoreDetailMapper">
+  <resultMap id="BaseResultMap" type="com.live.liveteam.entity.UserScoreDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="score_value" jdbcType="INTEGER" property="scoreValue" />
+    <result column="score_get_way" jdbcType="VARCHAR" property="scoreGetWay" />
+    <result column="score_get_time" jdbcType="BIGINT" property="scoreGetTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, open_id, score_value, score_get_way, score_get_time
+  </sql>
+  <select id="selectByExample" parameterType="com.live.liveteam.entity.UserScoreDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user_score_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_score_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_score_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.live.liveteam.entity.UserScoreDetailExample">
+    delete from user_score_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.live.liveteam.entity.UserScoreDetail">
+    insert into user_score_detail (id, open_id, score_value, 
+      score_get_way, score_get_time)
+    values (#{id,jdbcType=BIGINT}, #{openId,jdbcType=VARCHAR}, #{scoreValue,jdbcType=INTEGER}, 
+      #{scoreGetWay,jdbcType=VARCHAR}, #{scoreGetTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.live.liveteam.entity.UserScoreDetail">
+    insert into user_score_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="scoreValue != null">
+        score_value,
+      </if>
+      <if test="scoreGetWay != null">
+        score_get_way,
+      </if>
+      <if test="scoreGetTime != null">
+        score_get_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreValue != null">
+        #{scoreValue,jdbcType=INTEGER},
+      </if>
+      <if test="scoreGetWay != null">
+        #{scoreGetWay,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreGetTime != null">
+        #{scoreGetTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.live.liveteam.entity.UserScoreDetailExample" resultType="java.lang.Long">
+    select count(*) from user_score_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_score_detail
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.openId != null">
+        open_id = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scoreValue != null">
+        score_value = #{record.scoreValue,jdbcType=INTEGER},
+      </if>
+      <if test="record.scoreGetWay != null">
+        score_get_way = #{record.scoreGetWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scoreGetTime != null">
+        score_get_time = #{record.scoreGetTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_score_detail
+    set id = #{record.id,jdbcType=BIGINT},
+      open_id = #{record.openId,jdbcType=VARCHAR},
+      score_value = #{record.scoreValue,jdbcType=INTEGER},
+      score_get_way = #{record.scoreGetWay,jdbcType=VARCHAR},
+      score_get_time = #{record.scoreGetTime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.live.liveteam.entity.UserScoreDetail">
+    update user_score_detail
+    <set>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreValue != null">
+        score_value = #{scoreValue,jdbcType=INTEGER},
+      </if>
+      <if test="scoreGetWay != null">
+        score_get_way = #{scoreGetWay,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreGetTime != null">
+        score_get_time = #{scoreGetTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.live.liveteam.entity.UserScoreDetail">
+    update user_score_detail
+    set open_id = #{openId,jdbcType=VARCHAR},
+      score_value = #{scoreValue,jdbcType=INTEGER},
+      score_get_way = #{scoreGetWay,jdbcType=VARCHAR},
+      score_get_time = #{scoreGetTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

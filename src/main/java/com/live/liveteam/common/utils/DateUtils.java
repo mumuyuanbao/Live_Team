@@ -50,7 +50,7 @@ public class DateUtils {
      *
      * @return
      */
-    public static Integer getTimeStamp() {
+    public static long getTimeStamp() {
         Long time = Calendar.getInstance().getTimeInMillis() / 1000;
         return time.intValue();
     }

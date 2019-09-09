@@ -16,7 +16,10 @@ pagehelper:
   reasonable: true
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.live.liveteam.entityin
+  type-aliases-package: com.live.liveteam.entity
+logging:
+  level:
+    com.live.liveteam.mapper: DEBUG
 fdfs:
   so-timeout: 1500
   connect-timeout: 600

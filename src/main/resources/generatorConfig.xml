@@ -66,8 +66,7 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
 
-
-        <table tableName="user" domainObjectName="User" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true" enableSelectByPrimaryKey="true"
+        <table tableName="order_details" domainObjectName="OrderDetails" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true" enableSelectByPrimaryKey="true"
                enableUpdateByPrimaryKey="true"
                enableDeleteByPrimaryKey="true"/>
     </context>

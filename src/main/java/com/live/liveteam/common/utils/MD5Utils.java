@@ -18,17 +18,6 @@ public class MD5Utils {
     public static final String USER_PWD_SUFFIX = "YINGSHU_YS";
 
     /**
-     * 测试主函数
-     *
-     * @param args
-     */
-    public static void main(String args[]) {
-        for (int i = 0; i < 10; i++) {
-            System.out.println(createUserToken(123L));
-        }
-    }
-
-    /**
      * MD5加码 生成32位md5码
      */
     public static String string32MD5(String inStr) {
@@ -74,7 +63,7 @@ public class MD5Utils {
      * @param userId
      * @return
      */
-    public static String createUserToken(Long userId) {
+    public static String createUserToken(String userId) {
         // 前缀
         // String prefix ="yushu";
         // 后缀

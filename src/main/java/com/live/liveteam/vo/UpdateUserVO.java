@@ -1,16 +1,14 @@
-package com.live.liveteam.req;
+package com.live.liveteam.vo;
 
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 作者：木木豹
- * 时间2019-09-05 11:36
- * 描述：修改用户非公开信息vo
+ * 时间2019-09-07 11:29
+ * 描述：
  */
-@ApiModel("UpdateUserReq(修改用户公开信)")
-public class UpdateUserReq {
+public class UpdateUserVO {
     @ApiModelProperty(value = "头像地址URL", required = true)
     private String avatarUrl;
     /**
@@ -21,13 +19,17 @@ public class UpdateUserReq {
     /**
      * 网名
      */
-    @ApiModelProperty(value = "网名", required = true)
+    @ApiModelProperty(value = "用户名", required = true)
     private String nickName;
     /**
      * 用户生日时间戳
      */
     @ApiModelProperty(value = "用户生日-只允许修改一次", required = true)
     private Long userBirthday;
+
+
+    @ApiModelProperty("用户生日是否可修改  默认只能修改一次 0-可修改 1不可修改")
+    private boolean userIsNot;
 
     public String getAvatarUrl() {
         return avatarUrl;
@@ -61,4 +63,11 @@ public class UpdateUserReq {
         this.userBirthday = userBirthday;
     }
 
+    public boolean isUserIsNot() {
+        return userIsNot;
+    }
+
+    public void setUserIsNot(boolean userIsNot) {
+        this.userIsNot = userIsNot;
+    }
 }
