@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.live.liveteam.mapper.OrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.live.liveteam.entity.Orders" >
+    <constructor >
+      <idArg column="order_num" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="open_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="address_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="is_show" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="goods_urls" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_price_total" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="order_goods_num" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="coupons_ids" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_affirm" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="order_score" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="order_coupons_price" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="order_cancel_cause" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="order_pay_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="create_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="order_update" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="order_cancel_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_num, open_id, order_status, address_id, is_show, goods_urls, order_price_total, 
+    order_goods_num, coupons_ids, order_affirm, order_score, order_coupons_price, order_cancel_cause, 
+    order_pay_time, create_time, order_update, order_cancel_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.live.liveteam.entity.OrdersExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where order_num = #{orderNum,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from orders
+    where order_num = #{orderNum,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.live.liveteam.entity.OrdersExample" >
+    delete from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.live.liveteam.entity.Orders" >
+    insert into orders (order_num, open_id, order_status, 
+      address_id, is_show, goods_urls, 
+      order_price_total, order_goods_num, coupons_ids, 
+      order_affirm, order_score, order_coupons_price, 
+      order_cancel_cause, order_pay_time, create_time, 
+      order_update, order_cancel_time)
+    values (#{orderNum,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{orderStatus,jdbcType=INTEGER}, 
+      #{addressId,jdbcType=BIGINT}, #{isShow,jdbcType=INTEGER}, #{goodsUrls,jdbcType=VARCHAR}, 
+      #{orderPriceTotal,jdbcType=BIGINT}, #{orderGoodsNum,jdbcType=BIGINT}, #{couponsIds,jdbcType=VARCHAR}, 
+      #{orderAffirm,jdbcType=BIGINT}, #{orderScore,jdbcType=INTEGER}, #{orderCouponsPrice,jdbcType=BIGINT}, 
+      #{orderCancelCause,jdbcType=VARCHAR}, #{orderPayTime,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, 
+      #{orderUpdate,jdbcType=BIGINT}, #{orderCancelTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.live.liveteam.entity.Orders" >
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="addressId != null" >
+        address_id,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="goodsUrls != null" >
+        goods_urls,
+      </if>
+      <if test="orderPriceTotal != null" >
+        order_price_total,
+      </if>
+      <if test="orderGoodsNum != null" >
+        order_goods_num,
+      </if>
+      <if test="couponsIds != null" >
+        coupons_ids,
+      </if>
+      <if test="orderAffirm != null" >
+        order_affirm,
+      </if>
+      <if test="orderScore != null" >
+        order_score,
+      </if>
+      <if test="orderCouponsPrice != null" >
+        order_coupons_price,
+      </if>
+      <if test="orderCancelCause != null" >
+        order_cancel_cause,
+      </if>
+      <if test="orderPayTime != null" >
+        order_pay_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="orderUpdate != null" >
+        order_update,
+      </if>
+      <if test="orderCancelTime != null" >
+        order_cancel_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="addressId != null" >
+        #{addressId,jdbcType=BIGINT},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=INTEGER},
+      </if>
+      <if test="goodsUrls != null" >
+        #{goodsUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPriceTotal != null" >
+        #{orderPriceTotal,jdbcType=BIGINT},
+      </if>
+      <if test="orderGoodsNum != null" >
+        #{orderGoodsNum,jdbcType=BIGINT},
+      </if>
+      <if test="couponsIds != null" >
+        #{couponsIds,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAffirm != null" >
+        #{orderAffirm,jdbcType=BIGINT},
+      </if>
+      <if test="orderScore != null" >
+        #{orderScore,jdbcType=INTEGER},
+      </if>
+      <if test="orderCouponsPrice != null" >
+        #{orderCouponsPrice,jdbcType=BIGINT},
+      </if>
+      <if test="orderCancelCause != null" >
+        #{orderCancelCause,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPayTime != null" >
+        #{orderPayTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="orderUpdate != null" >
+        #{orderUpdate,jdbcType=BIGINT},
+      </if>
+      <if test="orderCancelTime != null" >
+        #{orderCancelTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.live.liveteam.entity.OrdersExample" resultType="java.lang.Integer" >
+    select count(*) from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orders
+    <set >
+      <if test="record.orderNum != null" >
+        order_num = #{record.orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openId != null" >
+        open_id = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderStatus != null" >
+        order_status = #{record.orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.addressId != null" >
+        address_id = #{record.addressId,jdbcType=BIGINT},
+      </if>
+      <if test="record.isShow != null" >
+        is_show = #{record.isShow,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsUrls != null" >
+        goods_urls = #{record.goodsUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderPriceTotal != null" >
+        order_price_total = #{record.orderPriceTotal,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderGoodsNum != null" >
+        order_goods_num = #{record.orderGoodsNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.couponsIds != null" >
+        coupons_ids = #{record.couponsIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderAffirm != null" >
+        order_affirm = #{record.orderAffirm,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderScore != null" >
+        order_score = #{record.orderScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderCouponsPrice != null" >
+        order_coupons_price = #{record.orderCouponsPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderCancelCause != null" >
+        order_cancel_cause = #{record.orderCancelCause,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderPayTime != null" >
+        order_pay_time = #{record.orderPayTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderUpdate != null" >
+        order_update = #{record.orderUpdate,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderCancelTime != null" >
+        order_cancel_time = #{record.orderCancelTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orders
+    set order_num = #{record.orderNum,jdbcType=VARCHAR},
+      open_id = #{record.openId,jdbcType=VARCHAR},
+      order_status = #{record.orderStatus,jdbcType=INTEGER},
+      address_id = #{record.addressId,jdbcType=BIGINT},
+      is_show = #{record.isShow,jdbcType=INTEGER},
+      goods_urls = #{record.goodsUrls,jdbcType=VARCHAR},
+      order_price_total = #{record.orderPriceTotal,jdbcType=BIGINT},
+      order_goods_num = #{record.orderGoodsNum,jdbcType=BIGINT},
+      coupons_ids = #{record.couponsIds,jdbcType=VARCHAR},
+      order_affirm = #{record.orderAffirm,jdbcType=BIGINT},
+      order_score = #{record.orderScore,jdbcType=INTEGER},
+      order_coupons_price = #{record.orderCouponsPrice,jdbcType=BIGINT},
+      order_cancel_cause = #{record.orderCancelCause,jdbcType=VARCHAR},
+      order_pay_time = #{record.orderPayTime,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=BIGINT},
+      order_update = #{record.orderUpdate,jdbcType=BIGINT},
+      order_cancel_time = #{record.orderCancelTime,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.live.liveteam.entity.Orders" >
+    update orders
+    <set >
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="addressId != null" >
+        address_id = #{addressId,jdbcType=BIGINT},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=INTEGER},
+      </if>
+      <if test="goodsUrls != null" >
+        goods_urls = #{goodsUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPriceTotal != null" >
+        order_price_total = #{orderPriceTotal,jdbcType=BIGINT},
+      </if>
+      <if test="orderGoodsNum != null" >
+        order_goods_num = #{orderGoodsNum,jdbcType=BIGINT},
+      </if>
+      <if test="couponsIds != null" >
+        coupons_ids = #{couponsIds,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAffirm != null" >
+        order_affirm = #{orderAffirm,jdbcType=BIGINT},
+      </if>
+      <if test="orderScore != null" >
+        order_score = #{orderScore,jdbcType=INTEGER},
+      </if>
+      <if test="orderCouponsPrice != null" >
+        order_coupons_price = #{orderCouponsPrice,jdbcType=BIGINT},
+      </if>
+      <if test="orderCancelCause != null" >
+        order_cancel_cause = #{orderCancelCause,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPayTime != null" >
+        order_pay_time = #{orderPayTime,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="orderUpdate != null" >
+        order_update = #{orderUpdate,jdbcType=BIGINT},
+      </if>
+      <if test="orderCancelTime != null" >
+        order_cancel_time = #{orderCancelTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where order_num = #{orderNum,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.live.liveteam.entity.Orders" >
+    update orders
+    set open_id = #{openId,jdbcType=VARCHAR},
+      order_status = #{orderStatus,jdbcType=INTEGER},
+      address_id = #{addressId,jdbcType=BIGINT},
+      is_show = #{isShow,jdbcType=INTEGER},
+      goods_urls = #{goodsUrls,jdbcType=VARCHAR},
+      order_price_total = #{orderPriceTotal,jdbcType=BIGINT},
+      order_goods_num = #{orderGoodsNum,jdbcType=BIGINT},
+      coupons_ids = #{couponsIds,jdbcType=VARCHAR},
+      order_affirm = #{orderAffirm,jdbcType=BIGINT},
+      order_score = #{orderScore,jdbcType=INTEGER},
+      order_coupons_price = #{orderCouponsPrice,jdbcType=BIGINT},
+      order_cancel_cause = #{orderCancelCause,jdbcType=VARCHAR},
+      order_pay_time = #{orderPayTime,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      order_update = #{orderUpdate,jdbcType=BIGINT},
+      order_cancel_time = #{orderCancelTime,jdbcType=BIGINT}
+    where order_num = #{orderNum,jdbcType=VARCHAR}
+  </update>
+</mapper>

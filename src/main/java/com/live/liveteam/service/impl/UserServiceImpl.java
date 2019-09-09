@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.selectByPrimaryKey(openid);
         // uuid生成唯一key，用于维护微信小程序用户与服务端的会话
         long time = new Date().getTime();
-        String userToken = MD5Utils.createUserToken(time);
+        String userToken = MD5Utils.createUserToken(String.valueOf(time)+openid);
 
 
         if (user == null) {

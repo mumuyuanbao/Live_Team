@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.live.liveteam.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.live.liveteam.entity.User" >
+    <constructor >
+      <idArg column="open_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="session_key" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="city" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="province" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="country" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="avatar_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="gender" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="age" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="nick_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_postal" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="user_birthday" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="user_iphone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="realname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="card_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="qr_code_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_idevice" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="user_form" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="user_count_num" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="user_is_not" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="user_last_ip" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_login_num" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="user_login_address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="last_visit_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    open_id, session_key, city, province, country, avatar_url, gender, age, user_email, 
+    nick_name, user_postal, user_birthday, user_iphone, realname, card_id, qr_code_url, 
+    user_idevice, user_form, user_count_num, user_is_not, user_last_ip, user_login_num, 
+    user_login_address, create_time, last_visit_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.live.liveteam.entity.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where open_id = #{openId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where open_id = #{openId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.live.liveteam.entity.UserExample" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.live.liveteam.entity.User" >
+    insert into user (open_id, session_key, city, 
+      province, country, avatar_url, 
+      gender, age, user_email, 
+      nick_name, user_postal, user_birthday, 
+      user_iphone, realname, card_id, 
+      qr_code_url, user_idevice, user_form, 
+      user_count_num, user_is_not, user_last_ip, 
+      user_login_num, user_login_address, create_time, 
+      last_visit_time)
+    values (#{openId,jdbcType=VARCHAR}, #{sessionKey,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{province,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=TINYINT}, #{age,jdbcType=INTEGER}, #{userEmail,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{userPostal,jdbcType=BIGINT}, #{userBirthday,jdbcType=BIGINT}, 
+      #{userIphone,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, #{cardId,jdbcType=VARCHAR}, 
+      #{qrCodeUrl,jdbcType=VARCHAR}, #{userIdevice,jdbcType=TINYINT}, #{userForm,jdbcType=TINYINT}, 
+      #{userCountNum,jdbcType=BIGINT}, #{userIsNot,jdbcType=TINYINT}, #{userLastIp,jdbcType=VARCHAR}, 
+      #{userLoginNum,jdbcType=BIGINT}, #{userLoginAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
+      #{lastVisitTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.live.liveteam.entity.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="sessionKey != null" >
+        session_key,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="avatarUrl != null" >
+        avatar_url,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="userEmail != null" >
+        user_email,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="userPostal != null" >
+        user_postal,
+      </if>
+      <if test="userBirthday != null" >
+        user_birthday,
+      </if>
+      <if test="userIphone != null" >
+        user_iphone,
+      </if>
+      <if test="realname != null" >
+        realname,
+      </if>
+      <if test="cardId != null" >
+        card_id,
+      </if>
+      <if test="qrCodeUrl != null" >
+        qr_code_url,
+      </if>
+      <if test="userIdevice != null" >
+        user_idevice,
+      </if>
+      <if test="userForm != null" >
+        user_form,
+      </if>
+      <if test="userCountNum != null" >
+        user_count_num,
+      </if>
+      <if test="userIsNot != null" >
+        user_is_not,
+      </if>
+      <if test="userLastIp != null" >
+        user_last_ip,
+      </if>
+      <if test="userLoginNum != null" >
+        user_login_num,
+      </if>
+      <if test="userLoginAddress != null" >
+        user_login_address,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="lastVisitTime != null" >
+        last_visit_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionKey != null" >
+        #{sessionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null" >
+        #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPostal != null" >
+        #{userPostal,jdbcType=BIGINT},
+      </if>
+      <if test="userBirthday != null" >
+        #{userBirthday,jdbcType=BIGINT},
+      </if>
+      <if test="userIphone != null" >
+        #{userIphone,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="cardId != null" >
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="qrCodeUrl != null" >
+        #{qrCodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdevice != null" >
+        #{userIdevice,jdbcType=TINYINT},
+      </if>
+      <if test="userForm != null" >
+        #{userForm,jdbcType=TINYINT},
+      </if>
+      <if test="userCountNum != null" >
+        #{userCountNum,jdbcType=BIGINT},
+      </if>
+      <if test="userIsNot != null" >
+        #{userIsNot,jdbcType=TINYINT},
+      </if>
+      <if test="userLastIp != null" >
+        #{userLastIp,jdbcType=VARCHAR},
+      </if>
+      <if test="userLoginNum != null" >
+        #{userLoginNum,jdbcType=BIGINT},
+      </if>
+      <if test="userLoginAddress != null" >
+        #{userLoginAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastVisitTime != null" >
+        #{lastVisitTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.live.liveteam.entity.UserExample" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.openId != null" >
+        open_id = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionKey != null" >
+        session_key = #{record.sessionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatarUrl != null" >
+        avatar_url = #{record.avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=TINYINT},
+      </if>
+      <if test="record.age != null" >
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.userEmail != null" >
+        user_email = #{record.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null" >
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPostal != null" >
+        user_postal = #{record.userPostal,jdbcType=BIGINT},
+      </if>
+      <if test="record.userBirthday != null" >
+        user_birthday = #{record.userBirthday,jdbcType=BIGINT},
+      </if>
+      <if test="record.userIphone != null" >
+        user_iphone = #{record.userIphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realname != null" >
+        realname = #{record.realname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardId != null" >
+        card_id = #{record.cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qrCodeUrl != null" >
+        qr_code_url = #{record.qrCodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userIdevice != null" >
+        user_idevice = #{record.userIdevice,jdbcType=TINYINT},
+      </if>
+      <if test="record.userForm != null" >
+        user_form = #{record.userForm,jdbcType=TINYINT},
+      </if>
+      <if test="record.userCountNum != null" >
+        user_count_num = #{record.userCountNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.userIsNot != null" >
+        user_is_not = #{record.userIsNot,jdbcType=TINYINT},
+      </if>
+      <if test="record.userLastIp != null" >
+        user_last_ip = #{record.userLastIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userLoginNum != null" >
+        user_login_num = #{record.userLoginNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.userLoginAddress != null" >
+        user_login_address = #{record.userLoginAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastVisitTime != null" >
+        last_visit_time = #{record.lastVisitTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set open_id = #{record.openId,jdbcType=VARCHAR},
+      session_key = #{record.sessionKey,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      province = #{record.province,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      avatar_url = #{record.avatarUrl,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=TINYINT},
+      age = #{record.age,jdbcType=INTEGER},
+      user_email = #{record.userEmail,jdbcType=VARCHAR},
+      nick_name = #{record.nickName,jdbcType=VARCHAR},
+      user_postal = #{record.userPostal,jdbcType=BIGINT},
+      user_birthday = #{record.userBirthday,jdbcType=BIGINT},
+      user_iphone = #{record.userIphone,jdbcType=VARCHAR},
+      realname = #{record.realname,jdbcType=VARCHAR},
+      card_id = #{record.cardId,jdbcType=VARCHAR},
+      qr_code_url = #{record.qrCodeUrl,jdbcType=VARCHAR},
+      user_idevice = #{record.userIdevice,jdbcType=TINYINT},
+      user_form = #{record.userForm,jdbcType=TINYINT},
+      user_count_num = #{record.userCountNum,jdbcType=BIGINT},
+      user_is_not = #{record.userIsNot,jdbcType=TINYINT},
+      user_last_ip = #{record.userLastIp,jdbcType=VARCHAR},
+      user_login_num = #{record.userLoginNum,jdbcType=BIGINT},
+      user_login_address = #{record.userLoginAddress,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=BIGINT},
+      last_visit_time = #{record.lastVisitTime,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.live.liveteam.entity.User" >
+    update user
+    <set >
+      <if test="sessionKey != null" >
+        session_key = #{sessionKey,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null" >
+        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="userEmail != null" >
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPostal != null" >
+        user_postal = #{userPostal,jdbcType=BIGINT},
+      </if>
+      <if test="userBirthday != null" >
+        user_birthday = #{userBirthday,jdbcType=BIGINT},
+      </if>
+      <if test="userIphone != null" >
+        user_iphone = #{userIphone,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="cardId != null" >
+        card_id = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="qrCodeUrl != null" >
+        qr_code_url = #{qrCodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdevice != null" >
+        user_idevice = #{userIdevice,jdbcType=TINYINT},
+      </if>
+      <if test="userForm != null" >
+        user_form = #{userForm,jdbcType=TINYINT},
+      </if>
+      <if test="userCountNum != null" >
+        user_count_num = #{userCountNum,jdbcType=BIGINT},
+      </if>
+      <if test="userIsNot != null" >
+        user_is_not = #{userIsNot,jdbcType=TINYINT},
+      </if>
+      <if test="userLastIp != null" >
+        user_last_ip = #{userLastIp,jdbcType=VARCHAR},
+      </if>
+      <if test="userLoginNum != null" >
+        user_login_num = #{userLoginNum,jdbcType=BIGINT},
+      </if>
+      <if test="userLoginAddress != null" >
+        user_login_address = #{userLoginAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="lastVisitTime != null" >
+        last_visit_time = #{lastVisitTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where open_id = #{openId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.live.liveteam.entity.User" >
+    update user
+    set session_key = #{sessionKey,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      age = #{age,jdbcType=INTEGER},
+      user_email = #{userEmail,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      user_postal = #{userPostal,jdbcType=BIGINT},
+      user_birthday = #{userBirthday,jdbcType=BIGINT},
+      user_iphone = #{userIphone,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      card_id = #{cardId,jdbcType=VARCHAR},
+      qr_code_url = #{qrCodeUrl,jdbcType=VARCHAR},
+      user_idevice = #{userIdevice,jdbcType=TINYINT},
+      user_form = #{userForm,jdbcType=TINYINT},
+      user_count_num = #{userCountNum,jdbcType=BIGINT},
+      user_is_not = #{userIsNot,jdbcType=TINYINT},
+      user_last_ip = #{userLastIp,jdbcType=VARCHAR},
+      user_login_num = #{userLoginNum,jdbcType=BIGINT},
+      user_login_address = #{userLoginAddress,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      last_visit_time = #{lastVisitTime,jdbcType=BIGINT}
+    where open_id = #{openId,jdbcType=VARCHAR}
+  </update>
+</mapper>
