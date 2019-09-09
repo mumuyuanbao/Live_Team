@@ -23,9 +23,10 @@ public class RedisUtil {
     public static final String LOGIN_USER_STRING = "member:Token:";
     public  static  final long USER_TOKEN_TIME= 6*60*60;
     /**
-     * 用户总积分储存路径
+     * 用户总积分储存路径 储存时间为永久存在
      */
-    public static final String USER_SCORE_STRING = "";
+    public static final String USER_SCORE_STRING = "member:Score:";
+
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
