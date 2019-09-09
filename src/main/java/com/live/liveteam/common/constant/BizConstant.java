@@ -10,12 +10,15 @@ import java.sql.Statement;
  */
 public class BizConstant {
 
-
+    /**
+     * 用户登录次数
+     */
+    public static final Integer LOG = 1;
 
     /**
      * 每页显示1条
      */
-    public static final Integer PAGE_SIZE_1 = 1;
+    public static final Integer LOGIN_SIZE = 1;
 
     /**
      * 每页显示15条
@@ -38,6 +41,11 @@ public class BizConstant {
     public static final Long PARENT_ID_ZERO_LONG = 0L;
 
     public static final Integer PARENT_ID_ZERO_INTEGER = 0;
+
+    /**
+     * 每页显示1条
+     */
+    public static final Byte IS_SHOW = 1;
 
     /**
      * 菜单根节点名称

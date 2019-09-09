@@ -1,5 +1,7 @@
 package com.live.liveteam.common.enums;
 
+import org.omg.CORBA.DynAnyPackage.Invalid;
+
 /**
  * 结果码枚举类
  * 
@@ -93,7 +95,7 @@ public enum EnumResult {
      */
     USER_CHANGE_PASSWORD_DIFF(100080, "两次输入密码不一致"),
 
-
+    USER_ADD_INFORMATION_FAILED(1000090,"用户信息添加失败"),
     /**
      * 用户数字签名校验失败
      */
@@ -122,7 +124,16 @@ public enum EnumResult {
 
     // 订单收货地址
     NO_RECEIVING_ADDRESS_EXISTS(1003011,"不存在收货地址"),
+
+
+
+
+    REQUIRED_PARAMETER_IP_ERROR(1004000,"请求IP错误，请检查网络环境")
+
     ;
+
+
+
 	
     private Integer code;
     private String msg;

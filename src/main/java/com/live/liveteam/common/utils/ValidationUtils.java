@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class ValidationUtils {
 
     /**
-     * @Function 判断是否是手机号
+     * @Function 正则表达式判断是否是手机号
      * @author   likaixuan
      * @Date     2018-11-19 14:41
      * @param
