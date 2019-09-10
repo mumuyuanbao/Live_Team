@@ -1,5 +1,7 @@
 package com.live.liveteam.common.constant;
 
+import org.omg.CORBA.INTERNAL;
+
 import java.sql.Statement;
 
 /**
@@ -75,5 +77,37 @@ public class BizConstant {
      * 自动关闭订单时间-代理
      */
     public static final String   AGENT_AUTO_CLOSING_TIME  = "AGENT_AUTO_CLOSING_TIME";
+    /**
+     * 优惠券未使用
+     */
+    public static final Integer COUPON_UNUSED = 0;
+    /**
+     * 优惠券已使用
+     */
+    public static final Integer COUPON_USED = 1;
+    /**
+     * 优惠券类型满减券
+     */
+    public static final Integer COUPON_TYPE_REDUCE = 1;
+    /**
+     * 优惠券类型兑换券
+     */
+    public static final Integer COUPON_TYPE_EXCHANGE = 2;
+    /**
+     * 优惠券没有面值
+     */
+    public static final Integer COUPON_NO_VALUE = -1;
+    /**
+     * 优惠券没有门槛
+     */
+    public static final Integer COUPON_NO_THRESHOLD = -1;
+    /**
+     * 优惠券没有对应商品
+     */
+    public static final Long COUPON_NO_GOODS = -1L;
+    /**
+     * 优惠券没有使用时间
+     */
+    public static final Long COUPON_NO_USE_TIME = -1L;
 
 }

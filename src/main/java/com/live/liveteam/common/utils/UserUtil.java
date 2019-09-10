@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.live.liveteam.common.enums.EnumResult;
 import com.live.liveteam.common.exception.BizException;
 import com.live.liveteam.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 作者: XW
@@ -13,6 +14,7 @@ import com.live.liveteam.entity.User;
  */
 public class UserUtil {
 
+    @Autowired
     private static RedisUtil redisUtil;
 
     /**
@@ -21,7 +23,7 @@ public class UserUtil {
      * @return 若已登录返回用户信息
      */
     public static User loginCheck(String token) {
-        if (token != null) {
+        if (token == null) {
             throw new BizException(EnumResult.USER_TOKEN_NULL.getCode(), EnumResult.USER_TOKEN_NULL.getMsg());
         }
         Object userInfo = redisUtil.get(RedisUtil.LOGIN_USER_STRING + token);

@@ -1,11 +1,5 @@
 package com.live.liveteam;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.live.liveteam.common.enums.EnumScoreDetailInfo;
 import com.live.liveteam.common.utils.RedisUtil;
 import com.live.liveteam.entity.User;
 import com.live.liveteam.service.UserScoreDetailService;
@@ -13,10 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,13 +21,6 @@ public class LiveteamApplicationTests {
 
     @Autowired
     private UserScoreDetailService userScoreDetailService;
-
-    @Test
-    public void testS() {
-        User user = new User();
-        user.setOpenId("2");
-        userScoreDetailService.insertScoreDetail(user, EnumScoreDetailInfo.GET_FROM_INVITE_USER, -50);
-    }
 
     @Test
     public void contextLoads() {

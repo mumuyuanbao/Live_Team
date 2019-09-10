@@ -32,30 +32,41 @@ public class UserScoreDetailController {
     private UserScoreDetailService userScoreDetailService;
 
     /**
-     * 提供前台页面返回单个用户的积分明细信息接口
-     * @param token
+     * 提供前台页面 返回单个用户的积分明细信息接口
+     * @param openId
      * @return
      */
     @GetMapping("QureyScoreDetail")
     @ApiOperation(value = "返回单个用户的积分明细信息")
-    public ResultVO<List<UserScoreDetail>> queryUserScoreDetail(@RequestParam(value = "token", required = true) String token) {
-        ResultVO<List<UserScoreDetail>> result = new ResultVO<>();
-        List<UserScoreDetail> details = userScoreDetailService.queryScoreDetailByOpenId(token);
-        result.setData(details);
-        result.setMsg(EnumResult.SUCCESS.getMsg());
-        result.setCode(EnumResult.SUCCESS.getCode());
-        return result;
+    @ApiImplicitParam(name = "openId", value = "openId", dataType = "String", paramType = "query")
+    public ResultVO<List<UserScoreDetail>> queryUserScoreDetail(String openId) {
+
+        return userScoreDetailService.queryScoreDetailByOpenId(openId);
     }
 
+    /**
+     * 提供前端页面 返回用户的总积分
+     *
+     * @param openId
+     * @return
+     */
+    @GetMapping("QureyTotalScore")
+    @ApiOperation(value = "返回单个用户的总积分信息")
+    @ApiImplicitParam(name = "openId", value = "openId", dataType = "String", paramType = "query")
+    public ResultVO<Integer> queryUserTotalScore(String openId) {
+
+        return userScoreDetailService.queryTotalScore(openId);
+    }
+
+
+    /**
+     * 提供后台页面 返回所有用户的积分明细信息接口
+     * @return
+     */
     @GetMapping("QueryScoreAll")
     @ApiOperation(value = "返回所有用户的积分明细信息")
     public ResultVO<List<UserScoreDetail>> queryUserScoreAll() {
-        ResultVO<List<UserScoreDetail>> result = new ResultVO<>();
-        List<UserScoreDetail> details = userScoreDetailService.queryAll();
-        result.setData(details);
-        result.setCode(EnumResult.SUCCESS.getCode());
-        result.setMsg(EnumResult.SUCCESS.getMsg());
-        return result;
-    }
 
+        return userScoreDetailService.queryAll();
+    }
 }
