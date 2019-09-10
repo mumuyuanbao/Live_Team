@@ -17,6 +17,7 @@ import com.live.liveteam.mapper.OrderDetailsMapper;
 import com.live.liveteam.mapper.OrdersMapper;
 import com.live.liveteam.service.OrderDetailsService;
 import com.live.liveteam.service.OrdersService;
+import com.live.liveteam.service.UserScoreDetailService;
 import com.live.liveteam.vo.OrderDetailsVO;
 import com.live.liveteam.vo.OrderListVO;
 import org.springframework.beans.BeanUtils;
@@ -43,6 +44,9 @@ public class OrdersServiceImpl implements OrdersService {
 
    @Autowired
    private   OrderDetailsMapper  orderDetailsMapper;
+
+   @Autowired
+   private UserScoreDetailService userScoreDetailService;
     /**
      * 查询用户订单列表
      *
@@ -260,7 +264,12 @@ public class OrdersServiceImpl implements OrdersService {
             //设置为已使用
 
         }
-        //扣除用户积分
+
+
+        //如果使用积分扣除用户积分
+        if (orderScore!=null&&orderScore>0){
+//            userScoreDetailService.insertScoreDetail()
+        }
 
 
 

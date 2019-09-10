@@ -9,7 +9,7 @@
       <arg column="province" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="country" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="avatar_url" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="gender" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="gender" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="age" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="user_email" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="nick_name" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -19,10 +19,9 @@
       <arg column="realname" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="card_id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="qr_code_url" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="user_idevice" jdbcType="TINYINT" javaType="java.lang.Byte" />
-      <arg column="user_form" jdbcType="TINYINT" javaType="java.lang.Byte" />
-      <arg column="user_count_num" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <arg column="user_is_not" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="user_idevice" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_form" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_is_not" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="user_last_ip" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="user_login_num" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="user_login_address" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -91,8 +90,8 @@
   <sql id="Base_Column_List" >
     open_id, session_key, city, province, country, avatar_url, gender, age, user_email, 
     nick_name, user_postal, user_birthday, user_iphone, realname, card_id, qr_code_url, 
-    user_idevice, user_form, user_count_num, user_is_not, user_last_ip, user_login_num, 
-    user_login_address, create_time, last_visit_time
+    user_idevice, user_form, user_is_not, user_last_ip, user_login_num, user_login_address, 
+    create_time, last_visit_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.live.liveteam.entity.UserExample" >
     select
@@ -132,18 +131,18 @@
       nick_name, user_postal, user_birthday, 
       user_iphone, realname, card_id, 
       qr_code_url, user_idevice, user_form, 
-      user_count_num, user_is_not, user_last_ip, 
-      user_login_num, user_login_address, create_time, 
-      last_visit_time)
+      user_is_not, user_last_ip, user_login_num, 
+      user_login_address, create_time, last_visit_time
+      )
     values (#{openId,jdbcType=VARCHAR}, #{sessionKey,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
       #{province,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, 
-      #{gender,jdbcType=TINYINT}, #{age,jdbcType=INTEGER}, #{userEmail,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, #{userEmail,jdbcType=VARCHAR}, 
       #{nickName,jdbcType=VARCHAR}, #{userPostal,jdbcType=BIGINT}, #{userBirthday,jdbcType=BIGINT}, 
       #{userIphone,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, #{cardId,jdbcType=VARCHAR}, 
-      #{qrCodeUrl,jdbcType=VARCHAR}, #{userIdevice,jdbcType=TINYINT}, #{userForm,jdbcType=TINYINT}, 
-      #{userCountNum,jdbcType=BIGINT}, #{userIsNot,jdbcType=TINYINT}, #{userLastIp,jdbcType=VARCHAR}, 
-      #{userLoginNum,jdbcType=BIGINT}, #{userLoginAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
-      #{lastVisitTime,jdbcType=BIGINT})
+      #{qrCodeUrl,jdbcType=VARCHAR}, #{userIdevice,jdbcType=INTEGER}, #{userForm,jdbcType=INTEGER}, 
+      #{userIsNot,jdbcType=INTEGER}, #{userLastIp,jdbcType=VARCHAR}, #{userLoginNum,jdbcType=BIGINT}, 
+      #{userLoginAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, #{lastVisitTime,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.live.liveteam.entity.User" >
     insert into user
@@ -202,9 +201,6 @@
       <if test="userForm != null" >
         user_form,
       </if>
-      <if test="userCountNum != null" >
-        user_count_num,
-      </if>
       <if test="userIsNot != null" >
         user_is_not,
       </if>
@@ -244,7 +240,7 @@
         #{avatarUrl,jdbcType=VARCHAR},
       </if>
       <if test="gender != null" >
-        #{gender,jdbcType=TINYINT},
+        #{gender,jdbcType=INTEGER},
       </if>
       <if test="age != null" >
         #{age,jdbcType=INTEGER},
@@ -274,16 +270,13 @@
         #{qrCodeUrl,jdbcType=VARCHAR},
       </if>
       <if test="userIdevice != null" >
-        #{userIdevice,jdbcType=TINYINT},
+        #{userIdevice,jdbcType=INTEGER},
       </if>
       <if test="userForm != null" >
-        #{userForm,jdbcType=TINYINT},
-      </if>
-      <if test="userCountNum != null" >
-        #{userCountNum,jdbcType=BIGINT},
+        #{userForm,jdbcType=INTEGER},
       </if>
       <if test="userIsNot != null" >
-        #{userIsNot,jdbcType=TINYINT},
+        #{userIsNot,jdbcType=INTEGER},
       </if>
       <if test="userLastIp != null" >
         #{userLastIp,jdbcType=VARCHAR},
@@ -330,7 +323,7 @@
         avatar_url = #{record.avatarUrl,jdbcType=VARCHAR},
       </if>
       <if test="record.gender != null" >
-        gender = #{record.gender,jdbcType=TINYINT},
+        gender = #{record.gender,jdbcType=INTEGER},
       </if>
       <if test="record.age != null" >
         age = #{record.age,jdbcType=INTEGER},
@@ -360,16 +353,13 @@
         qr_code_url = #{record.qrCodeUrl,jdbcType=VARCHAR},
       </if>
       <if test="record.userIdevice != null" >
-        user_idevice = #{record.userIdevice,jdbcType=TINYINT},
+        user_idevice = #{record.userIdevice,jdbcType=INTEGER},
       </if>
       <if test="record.userForm != null" >
-        user_form = #{record.userForm,jdbcType=TINYINT},
-      </if>
-      <if test="record.userCountNum != null" >
-        user_count_num = #{record.userCountNum,jdbcType=BIGINT},
+        user_form = #{record.userForm,jdbcType=INTEGER},
       </if>
       <if test="record.userIsNot != null" >
-        user_is_not = #{record.userIsNot,jdbcType=TINYINT},
+        user_is_not = #{record.userIsNot,jdbcType=INTEGER},
       </if>
       <if test="record.userLastIp != null" >
         user_last_ip = #{record.userLastIp,jdbcType=VARCHAR},
@@ -399,7 +389,7 @@
       province = #{record.province,jdbcType=VARCHAR},
       country = #{record.country,jdbcType=VARCHAR},
       avatar_url = #{record.avatarUrl,jdbcType=VARCHAR},
-      gender = #{record.gender,jdbcType=TINYINT},
+      gender = #{record.gender,jdbcType=INTEGER},
       age = #{record.age,jdbcType=INTEGER},
       user_email = #{record.userEmail,jdbcType=VARCHAR},
       nick_name = #{record.nickName,jdbcType=VARCHAR},
@@ -409,10 +399,9 @@
       realname = #{record.realname,jdbcType=VARCHAR},
       card_id = #{record.cardId,jdbcType=VARCHAR},
       qr_code_url = #{record.qrCodeUrl,jdbcType=VARCHAR},
-      user_idevice = #{record.userIdevice,jdbcType=TINYINT},
-      user_form = #{record.userForm,jdbcType=TINYINT},
-      user_count_num = #{record.userCountNum,jdbcType=BIGINT},
-      user_is_not = #{record.userIsNot,jdbcType=TINYINT},
+      user_idevice = #{record.userIdevice,jdbcType=INTEGER},
+      user_form = #{record.userForm,jdbcType=INTEGER},
+      user_is_not = #{record.userIsNot,jdbcType=INTEGER},
       user_last_ip = #{record.userLastIp,jdbcType=VARCHAR},
       user_login_num = #{record.userLoginNum,jdbcType=BIGINT},
       user_login_address = #{record.userLoginAddress,jdbcType=VARCHAR},
@@ -441,7 +430,7 @@
         avatar_url = #{avatarUrl,jdbcType=VARCHAR},
       </if>
       <if test="gender != null" >
-        gender = #{gender,jdbcType=TINYINT},
+        gender = #{gender,jdbcType=INTEGER},
       </if>
       <if test="age != null" >
         age = #{age,jdbcType=INTEGER},
@@ -471,16 +460,13 @@
         qr_code_url = #{qrCodeUrl,jdbcType=VARCHAR},
       </if>
       <if test="userIdevice != null" >
-        user_idevice = #{userIdevice,jdbcType=TINYINT},
+        user_idevice = #{userIdevice,jdbcType=INTEGER},
       </if>
       <if test="userForm != null" >
-        user_form = #{userForm,jdbcType=TINYINT},
-      </if>
-      <if test="userCountNum != null" >
-        user_count_num = #{userCountNum,jdbcType=BIGINT},
+        user_form = #{userForm,jdbcType=INTEGER},
       </if>
       <if test="userIsNot != null" >
-        user_is_not = #{userIsNot,jdbcType=TINYINT},
+        user_is_not = #{userIsNot,jdbcType=INTEGER},
       </if>
       <if test="userLastIp != null" >
         user_last_ip = #{userLastIp,jdbcType=VARCHAR},
@@ -507,7 +493,7 @@
       province = #{province,jdbcType=VARCHAR},
       country = #{country,jdbcType=VARCHAR},
       avatar_url = #{avatarUrl,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=TINYINT},
+      gender = #{gender,jdbcType=INTEGER},
       age = #{age,jdbcType=INTEGER},
       user_email = #{userEmail,jdbcType=VARCHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
@@ -517,10 +503,9 @@
       realname = #{realname,jdbcType=VARCHAR},
       card_id = #{cardId,jdbcType=VARCHAR},
       qr_code_url = #{qrCodeUrl,jdbcType=VARCHAR},
-      user_idevice = #{userIdevice,jdbcType=TINYINT},
-      user_form = #{userForm,jdbcType=TINYINT},
-      user_count_num = #{userCountNum,jdbcType=BIGINT},
-      user_is_not = #{userIsNot,jdbcType=TINYINT},
+      user_idevice = #{userIdevice,jdbcType=INTEGER},
+      user_form = #{userForm,jdbcType=INTEGER},
+      user_is_not = #{userIsNot,jdbcType=INTEGER},
       user_last_ip = #{userLastIp,jdbcType=VARCHAR},
       user_login_num = #{userLoginNum,jdbcType=BIGINT},
       user_login_address = #{userLoginAddress,jdbcType=VARCHAR},

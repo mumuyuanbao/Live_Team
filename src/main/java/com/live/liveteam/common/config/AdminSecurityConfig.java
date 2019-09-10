@@ -11,15 +11,13 @@ import org.springframework.web.servlet.config.annotation.*;
 /**
  * 请求拦截配置
  */
-//@Configuration
+@Configuration
 public class AdminSecurityConfig extends WebMvcConfigurationSupport {
 
     @Bean
     UserTokenInterceptor userTokenInterceptor() {
         return new UserTokenInterceptor();
     }
-
-
 
     // 解决H5 options请求500错误
     @Bean
@@ -69,7 +67,7 @@ public class AdminSecurityConfig extends WebMvcConfigurationSupport {
         interceptor.excludePathPatterns("/swagger-resources/**");
         interceptor.excludePathPatterns("/v2/**");
         // 用户拦截，排除的路径
-
+        interceptor.excludePathPatterns("/user/login");
         // 后台服务接口
 //        interceptor.excludePathPatterns("/manage/update_goods_cache");
     }

@@ -21,7 +21,7 @@ public class UserUtil {
      * @return 若已登录返回用户信息
      */
     public static User loginCheck(String token) {
-        if (token != null) {
+        if (token == null) {
             throw new BizException(EnumResult.USER_TOKEN_NULL.getCode(), EnumResult.USER_TOKEN_NULL.getMsg());
         }
         Object userInfo = redisUtil.get(RedisUtil.LOGIN_USER_STRING + token);
