@@ -140,6 +140,8 @@ public enum EnumResult {
     // 查找用户积分信息失败
     SCORE_FIND_USER_FAIL(200003, "用户无总积分或用户不存在"),
 
+    FAILED_TO_GENERATE_QR_CODE(2000300,"生成二维码失败"),
+
     // -------------------------优惠券相关-------------------------
     // 未查询到未使用优惠券信息
     //COUPONS_UNUSED_NOT_FOUND( 300001, "未查询到可用优惠券信息"),

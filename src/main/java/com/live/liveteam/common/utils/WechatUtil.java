@@ -4,18 +4,39 @@ package com.live.liveteam.common.utils; /**
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.live.liveteam.common.utils.HttpClientUtil;
+import io.swagger.models.HttpMethod;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.apache.shiro.codec.Base64;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.AlgorithmParameters;
 import java.security.Security;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static com.live.liveteam.common.utils.HttpClientUtil.sendPost;
 
 /**
  * @ClassName WechatUtil
@@ -38,7 +59,7 @@ public class WechatUtil {
         //默认参数
         requestUrlParam.put("grant_type", "authorization_code");
         //发送post请求读取调用微信接口获取openid用户唯一标识
-        JSONObject jsonObject = JSON.parseObject(HttpClientUtil.sendPost(requestUrl, requestUrlParam));
+        JSONObject jsonObject = JSON.parseObject(sendPost(requestUrl, requestUrlParam));
         return jsonObject;
     }
 
@@ -75,4 +96,7 @@ public class WechatUtil {
         }
         return null;
     }
+
+
+
 }
