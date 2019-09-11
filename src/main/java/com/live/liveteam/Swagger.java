@@ -16,11 +16,11 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * SWAGGER_2 API接口文档配置文件 访问地址：http://localhost/swagger-ui.html#!
+ * SWAGGER_2 API接口文档配置文件 访问地址：http://localhost:8080/swagger-ui.html#!
  */
-@Api(description = "会员接口")
 @Configuration
 public class Swagger {
 

@@ -17,6 +17,7 @@ import com.live.liveteam.mapper.UserMapper;
 import com.live.liveteam.req.UpdateUserReq;
 import com.live.liveteam.service.UserService;
 import com.live.liveteam.vo.UpdateUserVO;
+import com.live.liveteam.vo.UserTokenVO;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -59,17 +60,20 @@ public class UserController {
             @ApiImplicitParam(name = "code", value = "用户code", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "rawData", value = "用户非敏感信息", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "signature", value = "用户签名", dataType = "String", paramType = "query"),
-//            @ApiImplicitParam(name = "encrypteData", value = "密文", dataType = "String", paramType = "query"),
-//            @ApiImplicitParam(name = "iv", value = "偏向量", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "encrypteData", value = "密文", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "iv", value = "偏向量", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "userIdevice", value = "登录设备0-PC 1-移动H5 2-微信 3-安卓 4-IOS", dataType = "int", paramType = "query"),
 
     })
-    public ResultVO<User> user_login(@RequestParam(value = "code", required = true) String code,
-                                     @RequestParam(value = "rawData", required = false) String rawData,
-                                     @RequestParam(value = "signature", required = false) String signature,
-                                     @RequestParam(value = "userIdevice", required = true) Integer userIdevice, HttpServletRequest request
+    public ResultVO<UserTokenVO> user_login(@RequestParam(value = "code", required = true) String code,
+                                            @RequestParam(value = "rawData", required = false) String rawData,
+                                            @RequestParam(value = "signature", required = false) String signature,
+                                            @RequestParam(value = "encrypteData", required = false) String encrypteData,
+                                            @RequestParam(value = "iv", required = false) String iv,
+                                            @RequestParam(value = "userIdevice", required = false) Integer userIdevice,
+                                            HttpServletRequest request
     ) {
-        return userService.login(code, rawData, signature, userIdevice, request);
+        return userService.login(code, rawData, signature, encrypteData,iv,userIdevice, request);
     }
 
 
@@ -78,13 +82,9 @@ public class UserController {
      */
     @ApiOperation(value = "获取用户信息")
     @GetMapping("QureyUserInfo")
-    @ApiImplicitParam(name = "token", value = "token", dataType = "String", paramType = "query")
-    public ResultVO<User> QureyUserInfo(@RequestParam(value = "token",required = true) String token) {
-//        User user = userMapper.selectByPrimaryKey(token);
+    public ResultVO<User> qureyUserInfo(String token) {
         ResultVO<User> result = new ResultVO<User>();
         User user = UserUtil.loginCheck(token);
-        //        User user = JSON.parseObject((String) o,User.class);
-
         result.setData(user);
         result.setMsg(EnumResult.SUCCESS.getMsg());
         result.setCode(EnumResult.SUCCESS.getCode());
@@ -96,12 +96,9 @@ public class UserController {
      */
     @GetMapping("toQueryUserInfo")
     @ApiOperation(value = "到用户修改信息")
-    @ApiImplicitParam(name = "token", value = "token", dataType = "String", paramType = "query")
     public ResultVO<UpdateUserVO> toQueryUser(@RequestParam(value = "token",required = true)String token) {
         return userService.toQueryUserInfo(token);
     }
-
-
 
     /**
      * 修改用户信息
@@ -112,21 +109,5 @@ public class UserController {
         return userService.updateUserInfo(req, token);
     }
 
-    /**
-     * 测试page分页
-     */
-    @GetMapping("getlist")
-    @ApiOperation("测试分页")
-    public ResultVO<PageVO<User>> getpage() {
-        ResultVO<PageVO<User>> result = new ResultVO<>();
-        PageVO<User> page = new PageVO<>();
-        UserExample userExample = new UserExample();
-        PageHelper.startPage(3, 5);
-        List<User> list = userMapper.selectByExample(userExample);
-        PageInfo<User> pageInfo = new PageInfo<>(list);
-        page.setData(list);
-        page.savePageinfo(pageInfo);
-        result.setData(page);
-        return result;
-    }
+
 }

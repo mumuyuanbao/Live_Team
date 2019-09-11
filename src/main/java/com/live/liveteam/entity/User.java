@@ -1,60 +1,54 @@
 package com.live.liveteam.entity;
 
 import com.live.liveteam.common.utils.DateUtils;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
-import java.io.Serializable;
-
-@ApiModel("会员实体类")
-public class User implements Serializable {
-    @ApiModelProperty("用户唯一标识openid")
+public class User {
     private String openId;
-    @ApiModelProperty("sessionkey")
+
     private String sessionKey;
-    @ApiModelProperty("所在城市")
+
     private String city;
-    @ApiModelProperty("所在省份")
+
     private String province;
-    @ApiModelProperty("所在国家")
+
     private String country;
-    @ApiModelProperty("头像地址")
+
     private String avatarUrl;
-    @ApiModelProperty("性别 0-女 1-男")
+
     private Integer gender;
-    @ApiModelProperty("年龄")
+
     private Integer age;
-    @ApiModelProperty("邮箱")
+
     private String userEmail;
-    @ApiModelProperty("用户名（第一次登录使用微信，之后可更改）")
+
     private String nickName;
-    @ApiModelProperty("用户所在地邮编")
+
     private Long userPostal;
-    @ApiModelProperty("用户生日时间戳")
+
     private Long userBirthday;
-    @ApiModelProperty("用户手机号")
+
     private String userIphone;
-    @ApiModelProperty("真实姓名")
+
     private String realname;
-    @ApiModelProperty("身份证号")
+
     private String cardId;
-    @ApiModelProperty("用户二维码URL")
+
     private String qrCodeUrl;
-    @ApiModelProperty("最近登录设备 0-PC 1-移动H5 2-微信 3-安卓 4-IOS")
+
     private Integer userIdevice;
-    @ApiModelProperty("会员类型 0-青铜会员 1-白银会员 2-白金会员 ")
+
     private Integer userForm;
-    @ApiModelProperty("用户生日是否可修改  默认只能修改一次 0-可修改 1不可修改")
+
     private Integer userIsNot;
-    @ApiModelProperty("用户最后登录IP")
+
     private String userLastIp;
-    @ApiModelProperty("用户登录总次数")
+
     private Long userLoginNum;
-    @ApiModelProperty("用户登录最后地址")
+
     private String userLoginAddress;
-    @ApiModelProperty("创建时间-时间戳")
+
     private Long createTime;
-    @ApiModelProperty("最后登录时间-时间戳")
+
     private Long lastVisitTime;
 
     public static User newUserEntity(){
@@ -70,6 +64,7 @@ public class User implements Serializable {
         user.setUserEmail("");
         user.setNickName(String.valueOf(DateUtils.getTimeStamp()));
         user.setUserBirthday(0l);
+        user.setUserPostal(0l);
         user.setUserIphone("");
         user.setRealname("");
         user.setQrCodeUrl("");
@@ -84,7 +79,7 @@ public class User implements Serializable {
         return  user;
     }
 
-    public User(String openId, String sessionKey, String city, String province, String country, String avatarUrl, Integer gender, Integer age, String userEmail, String nickName, Long userPostal, Long userBirthday, String userIphone, String realname, String cardId, String qrCodeUrl, Integer userIdevice, Integer userForm, Long userCountNum, Integer userIsNot, String userLastIp, Long userLoginNum, String userLoginAddress, Long createTime, Long lastVisitTime) {
+    public User(String openId, String sessionKey, String city, String province, String country, String avatarUrl, Integer gender, Integer age, String userEmail, String nickName, Long userPostal, Long userBirthday, String userIphone, String realname, String cardId, String qrCodeUrl, Integer userIdevice, Integer userForm, Integer userIsNot, String userLastIp, Long userLoginNum, String userLoginAddress, Long createTime, Long lastVisitTime) {
         this.openId = openId;
         this.sessionKey = sessionKey;
         this.city = city;
@@ -120,7 +115,7 @@ public class User implements Serializable {
     }
 
     public void setOpenId(String openId) {
-        this.openId = openId;
+        this.openId = openId == null ? null : openId.trim();
     }
 
     public String getSessionKey() {
@@ -128,7 +123,7 @@ public class User implements Serializable {
     }
 
     public void setSessionKey(String sessionKey) {
-        this.sessionKey = sessionKey;
+        this.sessionKey = sessionKey == null ? null : sessionKey.trim();
     }
 
     public String getCity() {
@@ -136,7 +131,7 @@ public class User implements Serializable {
     }
 
     public void setCity(String city) {
-        this.city = city;
+        this.city = city == null ? null : city.trim();
     }
 
     public String getProvince() {
@@ -144,7 +139,7 @@ public class User implements Serializable {
     }
 
     public void setProvince(String province) {
-        this.province = province;
+        this.province = province == null ? null : province.trim();
     }
 
     public String getCountry() {
@@ -152,7 +147,7 @@ public class User implements Serializable {
     }
 
     public void setCountry(String country) {
-        this.country = country;
+        this.country = country == null ? null : country.trim();
     }
 
     public String getAvatarUrl() {
@@ -160,7 +155,7 @@ public class User implements Serializable {
     }
 
     public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+        this.avatarUrl = avatarUrl == null ? null : avatarUrl.trim();
     }
 
     public Integer getGender() {
@@ -184,7 +179,7 @@ public class User implements Serializable {
     }
 
     public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+        this.userEmail = userEmail == null ? null : userEmail.trim();
     }
 
     public String getNickName() {
@@ -192,7 +187,7 @@ public class User implements Serializable {
     }
 
     public void setNickName(String nickName) {
-        this.nickName = nickName;
+        this.nickName = nickName == null ? null : nickName.trim();
     }
 
     public Long getUserPostal() {
@@ -216,7 +211,7 @@ public class User implements Serializable {
     }
 
     public void setUserIphone(String userIphone) {
-        this.userIphone = userIphone;
+        this.userIphone = userIphone == null ? null : userIphone.trim();
     }
 
     public String getRealname() {
@@ -224,7 +219,7 @@ public class User implements Serializable {
     }
 
     public void setRealname(String realname) {
-        this.realname = realname;
+        this.realname = realname == null ? null : realname.trim();
     }
 
     public String getCardId() {
@@ -232,7 +227,7 @@ public class User implements Serializable {
     }
 
     public void setCardId(String cardId) {
-        this.cardId = cardId;
+        this.cardId = cardId == null ? null : cardId.trim();
     }
 
     public String getQrCodeUrl() {
@@ -240,7 +235,7 @@ public class User implements Serializable {
     }
 
     public void setQrCodeUrl(String qrCodeUrl) {
-        this.qrCodeUrl = qrCodeUrl;
+        this.qrCodeUrl = qrCodeUrl == null ? null : qrCodeUrl.trim();
     }
 
     public Integer getUserIdevice() {
@@ -272,7 +267,7 @@ public class User implements Serializable {
     }
 
     public void setUserLastIp(String userLastIp) {
-        this.userLastIp = userLastIp;
+        this.userLastIp = userLastIp == null ? null : userLastIp.trim();
     }
 
     public Long getUserLoginNum() {
@@ -288,7 +283,7 @@ public class User implements Serializable {
     }
 
     public void setUserLoginAddress(String userLoginAddress) {
-        this.userLoginAddress = userLoginAddress;
+        this.userLoginAddress = userLoginAddress == null ? null : userLoginAddress.trim();
     }
 
     public Long getCreateTime() {
