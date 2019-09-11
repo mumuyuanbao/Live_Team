@@ -1,7 +1,10 @@
 package com.live.liveteam;
 
+import com.live.liveteam.common.enums.EnumScoreDetailInfo;
+import com.live.liveteam.common.result.ResultVO;
 import com.live.liveteam.common.utils.RedisUtil;
 import com.live.liveteam.entity.User;
+import com.live.liveteam.service.CouponsService;
 import com.live.liveteam.service.UserScoreDetailService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -37,6 +41,14 @@ public class LiveteamApplicationTests {
 
 
 //        System.out.println(user5);
+    }
+
+    @Autowired
+    private CouponsService couponsService;
+
+    @Test
+    public void test1() {
+        userScoreDetailService.insertScoreDetail("1", EnumScoreDetailInfo.GET_FROM_REGIST, -50);
     }
 
 }

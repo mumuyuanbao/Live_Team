@@ -24,5 +24,4 @@ public interface UserScoreDetailService {
 
     SimpleResultVO insertScoreDetail(String openId, EnumScoreDetailInfo info, Integer value);
 
-
 }

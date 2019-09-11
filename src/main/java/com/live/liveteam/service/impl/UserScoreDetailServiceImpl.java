@@ -15,10 +15,12 @@ import com.live.liveteam.entity.UserScoreDetail;
 import com.live.liveteam.entity.UserScoreDetailExample;
 import com.live.liveteam.mapper.UserScoreDetailMapper;
 import com.live.liveteam.service.UserScoreDetailService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 作者: XW
@@ -51,8 +53,8 @@ public class UserScoreDetailServiceImpl implements UserScoreDetailService {
         // 设定时间排序
         example.setOrderByClause("score_get_time");
         UserScoreDetailExample.Criteria criteria = example.createCriteria();
-        PageHelper.startPage(pageNum, pageSize);
         criteria.andOpenIdEqualTo(openId);
+        PageHelper.startPage(pageNum, pageSize);
         List<UserScoreDetail> details = userScoreDetailMapper.selectByExample(example);
         PageInfo<UserScoreDetail> pageInfo = new PageInfo<>(details);
         PageVO<UserScoreDetail> page = new PageVO<>();
@@ -100,7 +102,29 @@ public class UserScoreDetailServiceImpl implements UserScoreDetailService {
             result.setData((Integer) totalScore);
             return result;
         } else {
-            throw new BizException(EnumResult.SCORE_FIND_USER_FAIL.getCode(), EnumResult.SCORE_FIND_USER_FAIL.getMsg());
+            // 没有值时进数据库查询
+            UserScoreDetailExample example = new UserScoreDetailExample();
+            UserScoreDetailExample.Criteria criteria = example.createCriteria();
+            criteria.andOpenIdEqualTo(openId);
+            List<UserScoreDetail> details = userScoreDetailMapper.selectByExample(example);
+            // 判断是否存在该用户的积分明细数据
+            if (EmptyUtils.isEmpty(details)) {
+                result.setCode(EnumResult.SUCCESS.getCode());
+                result.setMsg(EnumResult.SUCCESS.getMsg());
+                result.setData(0);
+                return result;
+            } else {
+                // 若有则根据数据库中的明细数据计算出总积分放入redis
+                Integer totalSco = 0;
+                for (UserScoreDetail detail : details) {
+                    totalSco += detail.getScoreValue();
+                }
+                redisUtil.set(key, totalSco);
+                result.setCode(EnumResult.SUCCESS.getCode());
+                result.setMsg(EnumResult.SUCCESS.getMsg());
+                result.setData(totalSco);
+                return result;
+            }
         }
     }
 
@@ -108,8 +132,8 @@ public class UserScoreDetailServiceImpl implements UserScoreDetailService {
      * (后端使用)插入一条用户的积分明细数据
      *
      * @param openId 用户openId
-     * @param info 订单明细产生方式
-     * @param value 订单明细产生的值
+     * @param info 积分明细产生方式
+     * @param value 积分明细产生的值
      * @return 插入结果
      */
     @Override
@@ -124,7 +148,6 @@ public class UserScoreDetailServiceImpl implements UserScoreDetailService {
                     info.getInfo(), DateUtils.getTimeStamp());
             userScoreDetailMapper.insertSelective(detail);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new BizException(EnumResult.SCORE_INSERT_DATABASE_FAIL.getCode(), EnumResult.SCORE_INSERT_DATABASE_FAIL.getMsg());
         }
         try {
@@ -149,4 +172,5 @@ public class UserScoreDetailServiceImpl implements UserScoreDetailService {
         result.setMsg(EnumResult.SUCCESS.getMsg());
         return result;
     }
+
 }

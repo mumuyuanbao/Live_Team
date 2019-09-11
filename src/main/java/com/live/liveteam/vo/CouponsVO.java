@@ -16,9 +16,9 @@ public class CouponsVO {
     @ApiModelProperty("优惠券种类")
     private Integer couponsType;
     @ApiModelProperty("满减类优惠券面值")
-    private Integer couponsValue;
+    private Double couponsValue;
     @ApiModelProperty("满减类优惠券门槛")
-    private Integer couponsRequire;
+    private Double couponsRequire;
     @ApiModelProperty("兑换类优惠券对应商品Id")
     private Long couponsGoodsId;
     @ApiModelProperty("优惠券状态")
@@ -29,7 +29,7 @@ public class CouponsVO {
     public CouponsVO() {
     }
 
-    public CouponsVO(Long id, Integer couponsType, Integer couponsValue, Integer couponsRequire, Long couponsGoodsId, Integer couponsState, String couponsDesc) {
+    public CouponsVO(Long id, Integer couponsType, Double couponsValue, Double couponsRequire, Long couponsGoodsId, Integer couponsState, String couponsDesc) {
         this.id = id;
         this.couponsType = couponsType;
         this.couponsValue = couponsValue;
@@ -37,6 +37,19 @@ public class CouponsVO {
         this.couponsGoodsId = couponsGoodsId;
         this.couponsState = couponsState;
         this.couponsDesc = couponsDesc;
+    }
+
+    @Override
+    public String toString() {
+        return "CouponsVO{" +
+                "id=" + id +
+                ", couponsType=" + couponsType +
+                ", couponsValue=" + couponsValue +
+                ", couponsRequire=" + couponsRequire +
+                ", couponsGoodsId=" + couponsGoodsId +
+                ", couponsState=" + couponsState +
+                ", couponsDesc='" + couponsDesc + '\'' +
+                '}';
     }
 
     public Long getId() {
@@ -55,19 +68,19 @@ public class CouponsVO {
         this.couponsType = couponsType;
     }
 
-    public Integer getCouponsValue() {
+    public Double getCouponsValue() {
         return couponsValue;
     }
 
-    public void setCouponsValue(Integer couponsValue) {
+    public void setCouponsValue(Double couponsValue) {
         this.couponsValue = couponsValue;
     }
 
-    public Integer getCouponsRequire() {
+    public Double getCouponsRequire() {
         return couponsRequire;
     }
 
-    public void setCouponsRequire(Integer couponsRequire) {
+    public void setCouponsRequire(Double couponsRequire) {
         this.couponsRequire = couponsRequire;
     }
 

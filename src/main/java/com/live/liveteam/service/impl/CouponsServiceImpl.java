@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 /**
  * 作者: XW
  * 时间: 2019/9/10 16:50
@@ -87,11 +89,34 @@ public class CouponsServiceImpl implements CouponsService {
         Map<String, List> map = new HashMap<>(2);
         for (Coupons coupon : coupons) {
             if (BizConstant.COUPON_UNUSED.equals(coupon.getCouponsState())) {
-                // 将entity中的属性放入VO的工具类
-                CouponsVO vo = (CouponsVO) EntityToVOUtil.getVO(coupon, CouponsVO.class);
+                CouponsVO vo = new CouponsVO();
+                vo.setId(coupon.getId());
+                vo.setCouponsDesc(coupon.getCouponsDesc());
+                if (BizConstant.COUPON_TYPE_REDUCE.equals(coupon.getCouponsType())) {
+                    vo.setCouponsRequire(coupon.getCouponsRequire() / 100.0);
+                    vo.setCouponsValue(coupon.getCouponsValue() / 100.0);
+                } else {
+                    vo.setCouponsRequire(coupon.getCouponsRequire().doubleValue());
+                    vo.setCouponsValue(coupon.getCouponsValue().doubleValue());
+                }
+                vo.setCouponsState(coupon.getCouponsState());
+                vo.setCouponsGoodsId(coupon.getCouponsGoodsId());
+                vo.setCouponsType(coupon.getCouponsType());
                 unused.add(vo);
             } else {
-                CouponsVO vo = (CouponsVO) EntityToVOUtil.getVO(coupon, CouponsVO.class);
+                CouponsVO vo = new CouponsVO();
+                vo.setId(coupon.getId());
+                vo.setCouponsDesc(coupon.getCouponsDesc());
+                vo.setCouponsState(coupon.getCouponsState());
+                vo.setCouponsGoodsId(coupon.getCouponsGoodsId());
+                vo.setCouponsType(coupon.getCouponsType());
+                if (BizConstant.COUPON_TYPE_REDUCE.equals(coupon.getCouponsType())) {
+                    vo.setCouponsRequire(coupon.getCouponsRequire() / 100.0);
+                    vo.setCouponsValue(coupon.getCouponsValue() / 100.0);
+                } else {
+                    vo.setCouponsRequire(coupon.getCouponsRequire().doubleValue());
+                    vo.setCouponsValue(coupon.getCouponsValue().doubleValue());
+                }
                 used.add(vo);
             }
         }
