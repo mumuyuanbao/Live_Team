@@ -1,6 +1,8 @@
 package com.live.liveteam.controller;
 
+import com.github.pagehelper.Page;
 import com.live.liveteam.common.enums.EnumResult;
+import com.live.liveteam.common.result.PageVO;
 import com.live.liveteam.common.result.ResultVO;
 import com.live.liveteam.common.utils.RedisUtil;
 import com.live.liveteam.common.utils.UserUtil;
@@ -9,6 +11,7 @@ import com.live.liveteam.entity.UserScoreDetail;
 import com.live.liveteam.service.UserScoreDetailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,30 +35,45 @@ public class UserScoreDetailController {
     private UserScoreDetailService userScoreDetailService;
 
     /**
-     * 提供前台页面返回单个用户的积分明细信息接口
-     * @param token
+     * 提供前台页面 返回单个用户的积分明细信息接口
+     * @param openId
      * @return
      */
     @GetMapping("QureyScoreDetail")
     @ApiOperation(value = "返回单个用户的积分明细信息")
-    public ResultVO<List<UserScoreDetail>> queryUserScoreDetail(@RequestParam(value = "token", required = true) String token) {
-        ResultVO<List<UserScoreDetail>> result = new ResultVO<>();
-        List<UserScoreDetail> details = userScoreDetailService.queryScoreDetailByOpenId(token);
-        result.setData(details);
-        result.setMsg(EnumResult.SUCCESS.getMsg());
-        result.setCode(EnumResult.SUCCESS.getCode());
-        return result;
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "页码", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", value = "每页条数", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "openId", value = "openId", dataType = "String", paramType = "query"),
+    })
+    public ResultVO<PageVO<UserScoreDetail>> queryUserScoreDetail(Integer pageNum, Integer pageSize, String openId) {
+
+        return userScoreDetailService.queryScoreDetailByOpenId(pageNum, pageSize, openId);
     }
 
+    /**
+     * 提供前端页面 返回用户的总积分
+     *
+     * @param openId
+     * @return
+     */
+    @GetMapping("QureyTotalScore")
+    @ApiOperation(value = "返回单个用户的总积分信息")
+    @ApiImplicitParam(name = "openId", value = "openId", dataType = "String", paramType = "query")
+    public ResultVO<Integer> queryUserTotalScore(String openId) {
+
+        return userScoreDetailService.queryTotalScore(openId);
+    }
+
+
+    /**
+     * 提供后台页面 返回所有用户的积分明细信息接口
+     * @return
+     */
     @GetMapping("QueryScoreAll")
     @ApiOperation(value = "返回所有用户的积分明细信息")
     public ResultVO<List<UserScoreDetail>> queryUserScoreAll() {
-        ResultVO<List<UserScoreDetail>> result = new ResultVO<>();
-        List<UserScoreDetail> details = userScoreDetailService.queryAll();
-        result.setData(details);
-        result.setCode(EnumResult.SUCCESS.getCode());
-        result.setMsg(EnumResult.SUCCESS.getMsg());
-        return result;
-    }
 
+        return userScoreDetailService.queryAll();
+    }
 }

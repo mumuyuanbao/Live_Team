@@ -137,11 +137,15 @@ public enum EnumResult {
     // 对Redis中的总积分修改失败
     SCORE_INSERT_REDIS_FAIL(200002, "积分信息更新到Redis失败"),
 
-    // 查找用户积分信息失败
-    SCORE_FIND_USER_FAIL(200003, "用户无总积分或用户不存在"),
 
-    FAILED_TO_GENERATE_QR_CODE(2000300,"生成二维码失败")
+    FAILED_TO_GENERATE_QR_CODE(2000300,"生成二维码失败"),
 
+    // -------------------------优惠券相关-------------------------
+    // 未查询到未使用优惠券信息
+    //COUPONS_UNUSED_NOT_FOUND( 300001, "未查询到可用优惠券信息"),
+
+    // 未查询到优惠券信息
+    COUPONS_INFO_NOT_FOUND(300002, "未查询到优惠券信息")
     ;
 
 

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.live.liveteam.common.enums.EnumResult;
 import com.live.liveteam.common.exception.BizException;
 import com.live.liveteam.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 作者: XW
@@ -13,6 +14,7 @@ import com.live.liveteam.entity.User;
  */
 public class UserUtil {
 
+    @Autowired
     private static RedisUtil redisUtil;
 
     /**

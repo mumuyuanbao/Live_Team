@@ -1,14 +1,19 @@
 package com.live.liveteam.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel("积分明细")
 public class UserScoreDetail {
+    @ApiModelProperty("主键")
     private Long id;
-
+    @ApiModelProperty("用户openId")
     private String openId;
-
+    @ApiModelProperty("积分改变的值")
     private Integer scoreValue;
-
+    @ApiModelProperty("积分获得方式")
     private String scoreGetWay;
-
+    @ApiModelProperty("积分获得时间")
     private Long scoreGetTime;
 
     public UserScoreDetail() {
