@@ -7,10 +7,12 @@ import com.live.liveteam.common.result.ResultVO;
 import com.live.liveteam.common.result.SimpleResultVO;
 import com.live.liveteam.common.utils.DateUtils;
 import com.live.liveteam.common.utils.EmptyUtils;
+import com.live.liveteam.common.utils.EntityToVOUtil;
 import com.live.liveteam.entity.Coupons;
 import com.live.liveteam.entity.CouponsExample;
 import com.live.liveteam.mapper.CouponsMapper;
 import com.live.liveteam.service.CouponsService;
+import com.live.liveteam.vo.CouponsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,8 +50,7 @@ public class CouponsServiceImpl implements CouponsService {
         criteria.andOpenIdEqualTo(openId);
         // 添加优惠券未使用条件
         criteria.andCouponsStateEqualTo(BizConstant.COUPON_UNUSED);
-        List<Coupons> coupons = couponsMapper.selectByExample(example);
-        Integer number = coupons.size();
+        int number =(int) couponsMapper.countByExample(example);
         if (number > 0) {
             result.setCode(EnumResult.SUCCESS.getCode());
             result.setMsg(EnumResult.SUCCESS.getMsg());
@@ -81,14 +82,17 @@ public class CouponsServiceImpl implements CouponsService {
         criteria.andOpenIdEqualTo(openId);
         List<Coupons> coupons = couponsMapper.selectByExample(example);
         // 将优惠券进行分类,未使用和已使用分别放入map中
-        List<Coupons> used = new ArrayList<>();
-        List<Coupons> unused = new ArrayList<>();
+        List<CouponsVO> used = new ArrayList<>();
+        List<CouponsVO> unused = new ArrayList<>();
         Map<String, List> map = new HashMap<>(2);
         for (Coupons coupon : coupons) {
             if (BizConstant.COUPON_UNUSED.equals(coupon.getCouponsState())) {
-                unused.add(coupon);
+                // 将entity中的属性放入VO的工具类
+                CouponsVO vo = (CouponsVO) EntityToVOUtil.getVO(coupon, CouponsVO.class);
+                unused.add(vo);
             } else {
-                used.add(coupon);
+                CouponsVO vo = (CouponsVO) EntityToVOUtil.getVO(coupon, CouponsVO.class);
+                used.add(vo);
             }
         }
         // 有无数据都创建map防止前端出现undefined

@@ -77,6 +77,9 @@
     id, open_id, coupons_type, coupons_value, coupons_require, coupons_goods_id, coupons_state, 
     coupons_start_time, coupons_use_time, coupons_desc
   </sql>
+
+
+
   <select id="selectByExample" parameterType="com.live.liveteam.entity.CouponsExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
