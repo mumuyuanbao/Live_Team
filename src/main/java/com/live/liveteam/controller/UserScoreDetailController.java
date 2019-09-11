@@ -1,6 +1,8 @@
 package com.live.liveteam.controller;
 
+import com.github.pagehelper.Page;
 import com.live.liveteam.common.enums.EnumResult;
+import com.live.liveteam.common.result.PageVO;
 import com.live.liveteam.common.result.ResultVO;
 import com.live.liveteam.common.utils.RedisUtil;
 import com.live.liveteam.common.utils.UserUtil;
@@ -9,6 +11,7 @@ import com.live.liveteam.entity.UserScoreDetail;
 import com.live.liveteam.service.UserScoreDetailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,10 +41,14 @@ public class UserScoreDetailController {
      */
     @GetMapping("QureyScoreDetail")
     @ApiOperation(value = "返回单个用户的积分明细信息")
-    @ApiImplicitParam(name = "openId", value = "openId", dataType = "String", paramType = "query")
-    public ResultVO<List<UserScoreDetail>> queryUserScoreDetail(String openId) {
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageNum", value = "页码", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", value = "每页条数", dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "openId", value = "openId", dataType = "String", paramType = "query"),
+    })
+    public ResultVO<PageVO<UserScoreDetail>> queryUserScoreDetail(Integer pageNum, Integer pageSize, String openId) {
 
-        return userScoreDetailService.queryScoreDetailByOpenId(openId);
+        return userScoreDetailService.queryScoreDetailByOpenId(pageNum, pageSize, openId);
     }
 
     /**

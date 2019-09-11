@@ -1,8 +1,11 @@
 package com.live.liveteam.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.live.liveteam.common.enums.EnumResult;
 import com.live.liveteam.common.enums.EnumScoreDetailInfo;
 import com.live.liveteam.common.exception.BizException;
+import com.live.liveteam.common.result.PageVO;
 import com.live.liveteam.common.result.ResultVO;
 import com.live.liveteam.common.result.SimpleResultVO;
 import com.live.liveteam.common.utils.DateUtils;
@@ -38,16 +41,24 @@ public class UserScoreDetailServiceImpl implements UserScoreDetailService {
      * @return
      */
     @Override
-    public ResultVO<List<UserScoreDetail>> queryScoreDetailByOpenId(String openId) {
+    public ResultVO<PageVO<UserScoreDetail>> queryScoreDetailByOpenId(Integer pageNum, Integer pageSize, String openId) {
         if (openId == null) {
+            // 为空抛出参数为空异常
             EmptyUtils.throwParamNull();
         }
-        ResultVO<List<UserScoreDetail>> result = new ResultVO<>();
+        ResultVO<PageVO<UserScoreDetail>> result = new ResultVO<>();
         UserScoreDetailExample example = new UserScoreDetailExample();
+        // 设定时间排序
+        example.setOrderByClause("score_get_time");
         UserScoreDetailExample.Criteria criteria = example.createCriteria();
+        PageHelper.startPage(pageNum, pageSize);
         criteria.andOpenIdEqualTo(openId);
         List<UserScoreDetail> details = userScoreDetailMapper.selectByExample(example);
-        result.setData(details);
+        PageInfo<UserScoreDetail> pageInfo = new PageInfo<>(details);
+        PageVO<UserScoreDetail> page = new PageVO<>();
+        page.savePageinfo(pageInfo);
+        page.setData(pageInfo.getList());
+        result.setData(page);
         result.setMsg(EnumResult.SUCCESS.getMsg());
         result.setCode(EnumResult.SUCCESS.getCode());
         return result;
@@ -76,6 +87,10 @@ public class UserScoreDetailServiceImpl implements UserScoreDetailService {
      */
     @Override
     public ResultVO<Integer> queryTotalScore(String openId) {
+        if (openId == null) {
+            // 为空抛出参数为空异常
+            EmptyUtils.throwParamNull();
+        }
         ResultVO<Integer> result = new ResultVO<>();
         String key = RedisUtil.USER_SCORE_STRING + openId;
         if (redisUtil.hasKey(key)) {

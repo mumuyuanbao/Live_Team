@@ -1,6 +1,7 @@
 package com.live.liveteam.service;
 
 import com.live.liveteam.common.enums.EnumScoreDetailInfo;
+import com.live.liveteam.common.result.PageVO;
 import com.live.liveteam.common.result.ResultVO;
 import com.live.liveteam.common.result.SimpleResultVO;
 import com.live.liveteam.entity.User;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public interface UserScoreDetailService {
 
-    ResultVO<List<UserScoreDetail>> queryScoreDetailByOpenId(String openId);
+    ResultVO<PageVO<UserScoreDetail>> queryScoreDetailByOpenId(Integer pageNum, Integer pageSize, String openId);
 
     ResultVO<List<UserScoreDetail>> queryAll();
 
