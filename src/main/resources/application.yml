@@ -31,3 +31,5 @@ fdfs:
   tracker-list: 47.94.157.36:22122
 url:
   fastdfsurl: http://47.94.157.36:8888
+server:
+  port: 8080
