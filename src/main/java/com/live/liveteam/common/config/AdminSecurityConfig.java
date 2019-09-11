@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.*;
 /**
  * 请求拦截配置
  */
-@Configuration
+//@Configuration
 public class AdminSecurityConfig extends WebMvcConfigurationSupport {
 
     @Bean
