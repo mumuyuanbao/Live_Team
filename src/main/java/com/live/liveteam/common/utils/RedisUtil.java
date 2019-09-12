@@ -21,6 +21,7 @@ public class RedisUtil {
      * token储存路径
      */
     public static final String LOGIN_USER_STRING = "member:Token:";
+    public static final String GOODS_DETAIL_LIST = "goods:list:";
     public  static  final long USER_TOKEN_TIME= 6*60*60;
     /**
      * 用户总积分储存路径 储存时间为永久存在

@@ -7,6 +7,7 @@ import com.live.liveteam.common.result.ResultVO;
 import com.live.liveteam.common.utils.CopyPropertiesUtils;
 import com.live.liveteam.common.utils.LiveCollectionUtil;
 import com.live.liveteam.common.utils.LiveStringUtil;
+import com.live.liveteam.common.utils.RedisUtil;
 import com.live.liveteam.entity.Goods;
 import com.live.liveteam.entity.GoodsExample;
 import com.live.liveteam.entity.UserExample;
@@ -34,6 +35,8 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     private GoodsMapper goodsMapper;
 
+    @Autowired
+    private RedisUtil redisUtil;
     /**
      * 按条件查询商品列表
      * @param pageNum
@@ -44,9 +47,14 @@ public class GoodsServiceImpl implements GoodsService {
      */
     @Override
     public ResultVO<PageInfo<GoodsListVO>> qureyGoodsList(Integer pageNum, Integer pageSize, String keyName, Long type) {
+
+
+
+        Map<Object, Object> hmget = redisUtil.hmget(RedisUtil.GOODS_DETAIL_LIST + "all");
+
         ResultVO<PageInfo<GoodsListVO>> result = new ResultVO<PageInfo<GoodsListVO>>();
         //商品必然属于二级分类，搜索一级分类先搜索一级分类下二级分类的ID，再搜索所有二级分类ID
-                GoodsExample goodsExample =  new GoodsExample();
+            GoodsExample goodsExample =  new GoodsExample();
             GoodsExample.Criteria criteria = goodsExample.createCriteria();
             if (keyName!=null&&keyName.length()>0){
                 String key = keyName+"%";

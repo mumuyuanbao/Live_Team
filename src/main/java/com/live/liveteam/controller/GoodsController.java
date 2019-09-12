@@ -64,4 +64,14 @@ public class GoodsController {
         return null;
     }
 
+    /**
+     * 商品精选列表 先查缓存，后台每次更新删除缓存，缓存失效，查询数据库，更新缓存
+     */
+    @ApiOperation(value = "获取精选列表")
+    @GetMapping("queryOnlyChoose")
+    public ResultVO<Goods> queryOnlyChoose() {
+
+        return null;
+    }
+
 }
