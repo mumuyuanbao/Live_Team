@@ -1,10 +1,13 @@
 package com.live.liveteam.controller;
 
+import com.live.liveteam.common.result.ResultVO;
 import com.live.liveteam.common.result.SimpleResultVO;
+import com.live.liveteam.service.ShoppingCarService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(description = "购物车接口")
 @RestController
 @RequestMapping("shoppingcar")
-public class ShoppingCar {
+public class ShoppingCarController {
+
+    @Autowired
+    private ShoppingCarService shoppingCarService;
 
     @ApiOperation("购物车添加商品")
     @PostMapping("carAdd")
@@ -27,8 +33,9 @@ public class ShoppingCar {
             @ApiImplicitParam(name = "goodsId", value = "商品id", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "goodsNum", value = "商品数量", dataType = "String", paramType = "query")
     })
-    public SimpleResultVO carAdd(String openId,String goodsId,String goodsNum){
+    public ResultVO carAdd(String openId, String goodsId, String goodsNum){
 
-        return  null;
+
+        return  shoppingCarService.insertShoppingCar(openId,goodsId,goodsNum);
     }
 }
