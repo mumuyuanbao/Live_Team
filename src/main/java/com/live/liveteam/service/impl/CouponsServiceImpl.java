@@ -7,7 +7,7 @@ import com.live.liveteam.common.result.ResultVO;
 import com.live.liveteam.common.result.SimpleResultVO;
 import com.live.liveteam.common.utils.DateUtils;
 import com.live.liveteam.common.utils.EmptyUtils;
-import com.live.liveteam.common.utils.EntityToVOUtil;
+import com.live.liveteam.common.utils.LiveStringUtil;
 import com.live.liveteam.entity.Coupons;
 import com.live.liveteam.entity.CouponsExample;
 import com.live.liveteam.mapper.CouponsMapper;
@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 作者: XW
@@ -135,18 +134,89 @@ public class CouponsServiceImpl implements CouponsService {
         return result;
     }
 
-//    (在订单界面)返回用户可用的优惠券数量
-//    @Override
-//    public ResultVO<Integer> queryCouponsOrderUsefulNumber() {
-//        ResultVO<Integer> result = new ResultVO<>();
-//        return result;
-//    }
-//    (订单)返回用户所有可用的优惠券
-//    @Override
-//    public ResultVO<List> queryCouponsOrderUserful() {
-//        ResultVO<List> result = new ResultVO<>();
-//        return result;
-//    }
+    /**
+     * (在订单界面)返回用户可用的优惠券数量
+     */
+    @Override
+    public ResultVO<Long> queryCouponsOrderUsefulNumber(String openid, String goodsId) {
+        if (EmptyUtils.isEmpty(openid) ||EmptyUtils.isEmpty(goodsId)) {
+            EmptyUtils.throwParamNull();
+        }
+        List<Long> goods = LiveStringUtil.splitToLong(goodsId, ",");
+        ResultVO<Long> result = new ResultVO<>();
+        // 创建查询条件
+        CouponsExample example = new CouponsExample();
+        CouponsExample.Criteria criteria1 = example.createCriteria();
+        // 查询订单列表中存在商品对应的兑换券
+        criteria1.andOpenIdEqualTo(openid);
+        criteria1.andCouponsStateEqualTo(BizConstant.COUPON_UNUSED);
+        criteria1.andCouponsGoodsIdIn(goods);
+        CouponsExample.Criteria criteria2 = example.or();
+        // 查询满减券
+        criteria2.andOpenIdEqualTo(openid);
+        criteria2.andCouponsStateEqualTo(BizConstant.COUPON_UNUSED);
+        criteria2.andCouponsTypeEqualTo(BizConstant.COUPON_TYPE_REDUCE);
+        try {
+            long res1 = couponsMapper.countByExample(example);
+            result.setData(res1);
+        } catch (Exception e) {
+            throw new BizException(EnumResult.SELECT_ERROR.getCode(), EnumResult.SELECT_ERROR.getMsg());
+        }
+        result.setCode(EnumResult.SUCCESS.getCode());
+        result.setMsg(EnumResult.SUCCESS.getMsg());
+        return result;
+    }
+
+
+    /**
+     * (订单)返回用户所有可用的优惠券
+     */
+    @Override
+    public ResultVO<List> queryCouponsOrderUseful(String openid, String goodsId) {
+        if (EmptyUtils.isEmpty(openid) ||EmptyUtils.isEmpty(goodsId)) {
+            EmptyUtils.throwParamNull();
+        }
+        List<Long> goods = LiveStringUtil.splitToLong(goodsId, ",");
+        ResultVO<List> result = new ResultVO<>();
+        // 创建查询条件
+        CouponsExample example = new CouponsExample();
+        CouponsExample.Criteria criteria = example.createCriteria();
+        // 查询订单列表中存在商品对应的兑换券
+        criteria.andOpenIdEqualTo(openid);
+        criteria.andCouponsGoodsIdIn(goods);
+        criteria.andCouponsStateEqualTo(BizConstant.COUPON_UNUSED);
+        CouponsExample.Criteria criteria2 = example.or();
+        // 查询满减券
+        criteria2.andOpenIdEqualTo(openid);
+        criteria2.andCouponsStateEqualTo(BizConstant.COUPON_UNUSED);
+        criteria2.andCouponsTypeEqualTo(BizConstant.COUPON_TYPE_REDUCE);
+        try {
+            List<Coupons> coupons = couponsMapper.selectByExample(example);
+            List<CouponsVO> data = new ArrayList<>();
+            for (Coupons coupon : coupons) {
+                CouponsVO vo = new CouponsVO();
+                vo.setId(coupon.getId());
+                vo.setCouponsDesc(coupon.getCouponsDesc());
+                vo.setCouponsGoodsId(coupon.getCouponsGoodsId());
+                vo.setCouponsState(coupon.getCouponsState());
+                vo.setCouponsType(coupon.getCouponsType());
+                if (BizConstant.COUPON_TYPE_REDUCE.equals(coupon.getCouponsType())) {
+                    vo.setCouponsRequire(coupon.getCouponsRequire() / 100.0);
+                    vo.setCouponsValue(coupon.getCouponsValue() / 100.0);
+                } else {
+                    vo.setCouponsValue(coupon.getCouponsValue().doubleValue());
+                    vo.setCouponsRequire(coupon.getCouponsRequire().doubleValue());
+                }
+                data.add(vo);
+            }
+            result.setData(data);
+        } catch (Exception e) {
+            throw new BizException(EnumResult.SELECT_ERROR.getCode(), EnumResult.SELECT_ERROR.getMsg());
+        }
+        result.setCode(EnumResult.SUCCESS.getCode());
+        result.setMsg(EnumResult.SUCCESS.getMsg());
+        return result;
+    }
 
     /**
      * 将使用的优惠券变为已使用状态
