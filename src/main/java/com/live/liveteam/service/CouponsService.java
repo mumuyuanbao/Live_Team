@@ -3,6 +3,7 @@ package com.live.liveteam.service;
 import com.live.liveteam.common.result.ResultVO;
 import com.live.liveteam.common.result.SimpleResultVO;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,9 +17,9 @@ public interface CouponsService {
 
     ResultVO<Map> queryCouponsAll(String openId);
 
-//    ResultVO<Integer> queryCouponsOrderUsefulNumber();
+    ResultVO<Long> queryCouponsOrderUsefulNumber(String openid, String goodsId);
 
-//    ResultVO<List> queryCouponsOrderUserful();
+    ResultVO<List> queryCouponsOrderUseful(String openid, String goodsId);
 
     SimpleResultVO updateCouponsToUsed(Long id);
 

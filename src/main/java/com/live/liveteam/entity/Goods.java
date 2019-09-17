@@ -1,6 +1,8 @@
 package com.live.liveteam.entity;
 
-public class Goods {
+import java.util.Comparator;
+
+public class Goods{
     private Long id;
 
     private Long gTypeId;
@@ -205,4 +207,40 @@ public class Goods {
     public void setgNum(String gNum) {
         this.gNum = gNum == null ? null : gNum.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Goods{" +
+                "id=" + id +
+                ", gTypeId=" + gTypeId +
+                ", gName='" + gName + '\'' +
+                ", gFullName='" + gFullName + '\'' +
+                ", gImage='" + gImage + '\'' +
+                ", gPrice=" + gPrice +
+                ", gSalePrice=" + gSalePrice +
+                ", gSort=" + gSort +
+                ", gStatus=" + gStatus +
+                ", gSayPoint='" + gSayPoint + '\'' +
+                ", gCreateTime=" + gCreateTime +
+                ", gCreateId='" + gCreateId + '\'' +
+                ", gUpdateTime=" + gUpdateTime +
+                ", gUpdateId='" + gUpdateId + '\'' +
+                ", gSalesNum=" + gSalesNum +
+                ", gProvince='" + gProvince + '\'' +
+                ", gCity='" + gCity + '\'' +
+                ", gNum='" + gNum + '\'' +
+                '}';
+    }
+
+
+//    @Override
+//    public int compare(Goods o1, Goods o2) {
+//
+//        return 01;
+//    }
+
+//    @Override
+//    public int compareTo(Goods o) {
+//            return (int)(this.gSort.intValue()-o.getgSort().intValue());
+//    }
 }

@@ -145,7 +145,12 @@ public enum EnumResult {
     //COUPONS_UNUSED_NOT_FOUND( 300001, "未查询到可用优惠券信息"),
 
     // 未查询到优惠券信息
-    COUPONS_INFO_NOT_FOUND(300002, "未查询到优惠券信息")
+    COUPONS_INFO_NOT_FOUND(300002, "未查询到优惠券信息"),
+
+
+    NO_GOODS_CLASSIFICATION(3000500,"商品分类为空"),
+    THIS_CLASSIFICATION_NOT_GOODS(3000510,"该分类没有商品"),
+    NO_SUCH_GOODS(3000520,"没有此商品")
     ;
 
 
