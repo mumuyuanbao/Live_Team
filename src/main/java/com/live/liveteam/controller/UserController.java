@@ -38,13 +38,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private RedisUtil redisUtil;
-
     /**
      * 用户登录
      */
@@ -65,7 +58,7 @@ public class UserController {
             @ApiImplicitParam(name = "userIdevice", value = "登录设备0-PC 1-移动H5 2-微信 3-安卓 4-IOS", dataType = "int", paramType = "query"),
 
     })
-    public ResultVO<UserTokenVO> user_login(@RequestParam(value = "code", required = true) String code,
+    public ResultVO<UserTokenVO> login(@RequestParam(value = "code", required = true) String code,
                                             @RequestParam(value = "rawData", required = false) String rawData,
                                             @RequestParam(value = "signature", required = false) String signature,
                                             @RequestParam(value = "encrypteData", required = false) String encrypteData,
@@ -81,10 +74,10 @@ public class UserController {
      * 获取用户信息
      */
     @ApiOperation(value = "获取用户信息")
-    @GetMapping("QureyUserInfo")
-    public ResultVO<User> qureyUserInfo(String token) {
+    @GetMapping("qureyUserInfo")
+    public ResultVO<User> qureyUserInfo(@RequestParam(value = "openId",required = true)String openId) {
         ResultVO<User> result = new ResultVO<User>();
-        User user = UserUtil.loginCheck(token);
+        User user = UserUtil.loginCheck(openId);
         result.setData(user);
         result.setMsg(EnumResult.SUCCESS.getMsg());
         result.setCode(EnumResult.SUCCESS.getCode());
@@ -96,8 +89,8 @@ public class UserController {
      */
     @GetMapping("toQueryUserInfo")
     @ApiOperation(value = "到用户修改信息")
-    public ResultVO<UpdateUserVO> toQueryUser(@RequestParam(value = "token",required = true)String token) {
-        return userService.toQueryUserInfo(token);
+    public ResultVO<UpdateUserVO> toQueryUser(@RequestParam(value = "openId",required = true)String openId) {
+        return userService.toQueryUserInfo(openId);
     }
 
     /**
@@ -105,8 +98,8 @@ public class UserController {
      */
     @PostMapping("updateUserInfo")
     @ApiOperation(value = "修改用户信息")
-    public SimpleResultVO updateUserInfo(@RequestBody UpdateUserReq req, String token) {
-        return userService.updateUserInfo(req, token);
+    public SimpleResultVO updateUserInfo(@RequestBody UpdateUserReq req,@RequestParam(value = "openId",required = true) String openId) {
+        return userService.updateUserInfo(req, openId);
     }
 
 

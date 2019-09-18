@@ -1,11 +1,11 @@
 package com.live.liveteam.entity;
 
-import java.util.Comparator;
-
-public class Goods{
+public class Goods {
     private Long id;
 
     private Long gTypeId;
+
+    private Long gTypePid;
 
     private String gName;
 
@@ -19,7 +19,13 @@ public class Goods{
 
     private Long gSort;
 
+    private Byte gIsOnly;
+
     private Byte gStatus;
+
+    private Byte goodsIsNew;
+
+    private Byte gNewStart;
 
     private String gSayPoint;
 
@@ -39,16 +45,20 @@ public class Goods{
 
     private String gNum;
 
-    public Goods(Long id, Long gTypeId, String gName, String gFullName, String gImage, Long gPrice, Long gSalePrice, Long gSort, Byte gStatus, String gSayPoint, Long gCreateTime, String gCreateId, Long gUpdateTime, String gUpdateId, Long gSalesNum, String gProvince, String gCity, String gNum) {
+    public Goods(Long id, Long gTypeId, Long gTypePid, String gName, String gFullName, String gImage, Long gPrice, Long gSalePrice, Long gSort, Byte gIsOnly, Byte gStatus, Byte goodsIsNew, Byte gNewStart, String gSayPoint, Long gCreateTime, String gCreateId, Long gUpdateTime, String gUpdateId, Long gSalesNum, String gProvince, String gCity, String gNum) {
         this.id = id;
         this.gTypeId = gTypeId;
+        this.gTypePid = gTypePid;
         this.gName = gName;
         this.gFullName = gFullName;
         this.gImage = gImage;
         this.gPrice = gPrice;
         this.gSalePrice = gSalePrice;
         this.gSort = gSort;
+        this.gIsOnly = gIsOnly;
         this.gStatus = gStatus;
+        this.goodsIsNew = goodsIsNew;
+        this.gNewStart = gNewStart;
         this.gSayPoint = gSayPoint;
         this.gCreateTime = gCreateTime;
         this.gCreateId = gCreateId;
@@ -78,6 +88,14 @@ public class Goods{
 
     public void setgTypeId(Long gTypeId) {
         this.gTypeId = gTypeId;
+    }
+
+    public Long getgTypePid() {
+        return gTypePid;
+    }
+
+    public void setgTypePid(Long gTypePid) {
+        this.gTypePid = gTypePid;
     }
 
     public String getgName() {
@@ -128,12 +146,36 @@ public class Goods{
         this.gSort = gSort;
     }
 
+    public Byte getgIsOnly() {
+        return gIsOnly;
+    }
+
+    public void setgIsOnly(Byte gIsOnly) {
+        this.gIsOnly = gIsOnly;
+    }
+
     public Byte getgStatus() {
         return gStatus;
     }
 
     public void setgStatus(Byte gStatus) {
         this.gStatus = gStatus;
+    }
+
+    public Byte getGoodsIsNew() {
+        return goodsIsNew;
+    }
+
+    public void setGoodsIsNew(Byte goodsIsNew) {
+        this.goodsIsNew = goodsIsNew;
+    }
+
+    public Byte getgNewStart() {
+        return gNewStart;
+    }
+
+    public void setgNewStart(Byte gNewStart) {
+        this.gNewStart = gNewStart;
     }
 
     public String getgSayPoint() {
@@ -207,40 +249,4 @@ public class Goods{
     public void setgNum(String gNum) {
         this.gNum = gNum == null ? null : gNum.trim();
     }
-
-    @Override
-    public String toString() {
-        return "Goods{" +
-                "id=" + id +
-                ", gTypeId=" + gTypeId +
-                ", gName='" + gName + '\'' +
-                ", gFullName='" + gFullName + '\'' +
-                ", gImage='" + gImage + '\'' +
-                ", gPrice=" + gPrice +
-                ", gSalePrice=" + gSalePrice +
-                ", gSort=" + gSort +
-                ", gStatus=" + gStatus +
-                ", gSayPoint='" + gSayPoint + '\'' +
-                ", gCreateTime=" + gCreateTime +
-                ", gCreateId='" + gCreateId + '\'' +
-                ", gUpdateTime=" + gUpdateTime +
-                ", gUpdateId='" + gUpdateId + '\'' +
-                ", gSalesNum=" + gSalesNum +
-                ", gProvince='" + gProvince + '\'' +
-                ", gCity='" + gCity + '\'' +
-                ", gNum='" + gNum + '\'' +
-                '}';
-    }
-
-
-//    @Override
-//    public int compare(Goods o1, Goods o2) {
-//
-//        return 01;
-//    }
-
-//    @Override
-//    public int compareTo(Goods o) {
-//            return (int)(this.gSort.intValue()-o.getgSort().intValue());
-//    }
 }

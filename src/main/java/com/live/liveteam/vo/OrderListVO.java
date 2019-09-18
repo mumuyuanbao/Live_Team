@@ -1,6 +1,7 @@
 package com.live.liveteam.vo;
 
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  * 时间2019-09-08 13:52
  * 描述：订单列表VO
  */
+@ApiModel("订单列表")
 public class OrderListVO {
     @ApiModelProperty("订单创建时间")
     private Long createTime;

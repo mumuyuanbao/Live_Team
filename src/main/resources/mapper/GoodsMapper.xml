@@ -5,13 +5,17 @@
     <constructor >
       <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="g_type_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="g_type_pid" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="g_name" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="g_full_name" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="g_image" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="g_price" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="g_sale_price" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="g_sort" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="g_is_only" jdbcType="TINYINT" javaType="java.lang.Byte" />
       <arg column="g_status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="goods_is_new" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="g_new_start" jdbcType="TINYINT" javaType="java.lang.Byte" />
       <arg column="g_say_point" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="g_create_time" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="g_create_id" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -82,9 +86,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, g_type_id, g_name, g_full_name, g_image, g_price, g_sale_price, g_sort, g_status, 
-    g_say_point, g_create_time, g_create_id, g_update_time, g_update_id, g_sales_num, 
-    g_province, g_city, g_num
+    id, g_type_id, g_type_pid, g_name, g_full_name, g_image, g_price, g_sale_price, g_sort, 
+    g_is_only, g_status, goods_is_new, g_new_start, g_say_point, g_create_time, g_create_id, 
+    g_update_time, g_update_id, g_sales_num, g_province, g_city, g_num
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.live.liveteam.entity.GoodsExample" >
     select
@@ -118,20 +122,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.live.liveteam.entity.Goods" >
-    insert into goods (id, g_type_id, g_name, 
-      g_full_name, g_image, g_price, 
-      g_sale_price, g_sort, g_status, 
-      g_say_point, g_create_time, g_create_id, 
-      g_update_time, g_update_id, g_sales_num, 
-      g_province, g_city, g_num
-      )
-    values (#{id,jdbcType=BIGINT}, #{gTypeId,jdbcType=BIGINT}, #{gName,jdbcType=VARCHAR}, 
-      #{gFullName,jdbcType=VARCHAR}, #{gImage,jdbcType=VARCHAR}, #{gPrice,jdbcType=BIGINT}, 
-      #{gSalePrice,jdbcType=BIGINT}, #{gSort,jdbcType=BIGINT}, #{gStatus,jdbcType=TINYINT}, 
-      #{gSayPoint,jdbcType=VARCHAR}, #{gCreateTime,jdbcType=BIGINT}, #{gCreateId,jdbcType=VARCHAR}, 
-      #{gUpdateTime,jdbcType=BIGINT}, #{gUpdateId,jdbcType=VARCHAR}, #{gSalesNum,jdbcType=BIGINT}, 
-      #{gProvince,jdbcType=VARCHAR}, #{gCity,jdbcType=VARCHAR}, #{gNum,jdbcType=VARCHAR}
-      )
+    insert into goods (id, g_type_id, g_type_pid, 
+      g_name, g_full_name, g_image, 
+      g_price, g_sale_price, g_sort, 
+      g_is_only, g_status, goods_is_new, 
+      g_new_start, g_say_point, g_create_time, 
+      g_create_id, g_update_time, g_update_id, 
+      g_sales_num, g_province, g_city, 
+      g_num)
+    values (#{id,jdbcType=BIGINT}, #{gTypeId,jdbcType=BIGINT}, #{gTypePid,jdbcType=BIGINT}, 
+      #{gName,jdbcType=VARCHAR}, #{gFullName,jdbcType=VARCHAR}, #{gImage,jdbcType=VARCHAR}, 
+      #{gPrice,jdbcType=BIGINT}, #{gSalePrice,jdbcType=BIGINT}, #{gSort,jdbcType=BIGINT}, 
+      #{gIsOnly,jdbcType=TINYINT}, #{gStatus,jdbcType=TINYINT}, #{goodsIsNew,jdbcType=TINYINT}, 
+      #{gNewStart,jdbcType=TINYINT}, #{gSayPoint,jdbcType=VARCHAR}, #{gCreateTime,jdbcType=BIGINT}, 
+      #{gCreateId,jdbcType=VARCHAR}, #{gUpdateTime,jdbcType=BIGINT}, #{gUpdateId,jdbcType=VARCHAR}, 
+      #{gSalesNum,jdbcType=BIGINT}, #{gProvince,jdbcType=VARCHAR}, #{gCity,jdbcType=VARCHAR}, 
+      #{gNum,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.live.liveteam.entity.Goods" >
     insert into goods
@@ -141,6 +147,9 @@
       </if>
       <if test="gTypeId != null" >
         g_type_id,
+      </if>
+      <if test="gTypePid != null" >
+        g_type_pid,
       </if>
       <if test="gName != null" >
         g_name,
@@ -160,8 +169,17 @@
       <if test="gSort != null" >
         g_sort,
       </if>
+      <if test="gIsOnly != null" >
+        g_is_only,
+      </if>
       <if test="gStatus != null" >
         g_status,
+      </if>
+      <if test="goodsIsNew != null" >
+        goods_is_new,
+      </if>
+      <if test="gNewStart != null" >
+        g_new_start,
       </if>
       <if test="gSayPoint != null" >
         g_say_point,
@@ -198,6 +216,9 @@
       <if test="gTypeId != null" >
         #{gTypeId,jdbcType=BIGINT},
       </if>
+      <if test="gTypePid != null" >
+        #{gTypePid,jdbcType=BIGINT},
+      </if>
       <if test="gName != null" >
         #{gName,jdbcType=VARCHAR},
       </if>
@@ -216,8 +237,17 @@
       <if test="gSort != null" >
         #{gSort,jdbcType=BIGINT},
       </if>
+      <if test="gIsOnly != null" >
+        #{gIsOnly,jdbcType=TINYINT},
+      </if>
       <if test="gStatus != null" >
         #{gStatus,jdbcType=TINYINT},
+      </if>
+      <if test="goodsIsNew != null" >
+        #{goodsIsNew,jdbcType=TINYINT},
+      </if>
+      <if test="gNewStart != null" >
+        #{gNewStart,jdbcType=TINYINT},
       </if>
       <if test="gSayPoint != null" >
         #{gSayPoint,jdbcType=VARCHAR},
@@ -263,6 +293,9 @@
       <if test="record.gTypeId != null" >
         g_type_id = #{record.gTypeId,jdbcType=BIGINT},
       </if>
+      <if test="record.gTypePid != null" >
+        g_type_pid = #{record.gTypePid,jdbcType=BIGINT},
+      </if>
       <if test="record.gName != null" >
         g_name = #{record.gName,jdbcType=VARCHAR},
       </if>
@@ -281,8 +314,17 @@
       <if test="record.gSort != null" >
         g_sort = #{record.gSort,jdbcType=BIGINT},
       </if>
+      <if test="record.gIsOnly != null" >
+        g_is_only = #{record.gIsOnly,jdbcType=TINYINT},
+      </if>
       <if test="record.gStatus != null" >
         g_status = #{record.gStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.goodsIsNew != null" >
+        goods_is_new = #{record.goodsIsNew,jdbcType=TINYINT},
+      </if>
+      <if test="record.gNewStart != null" >
+        g_new_start = #{record.gNewStart,jdbcType=TINYINT},
       </if>
       <if test="record.gSayPoint != null" >
         g_say_point = #{record.gSayPoint,jdbcType=VARCHAR},
@@ -320,13 +362,17 @@
     update goods
     set id = #{record.id,jdbcType=BIGINT},
       g_type_id = #{record.gTypeId,jdbcType=BIGINT},
+      g_type_pid = #{record.gTypePid,jdbcType=BIGINT},
       g_name = #{record.gName,jdbcType=VARCHAR},
       g_full_name = #{record.gFullName,jdbcType=VARCHAR},
       g_image = #{record.gImage,jdbcType=VARCHAR},
       g_price = #{record.gPrice,jdbcType=BIGINT},
       g_sale_price = #{record.gSalePrice,jdbcType=BIGINT},
       g_sort = #{record.gSort,jdbcType=BIGINT},
+      g_is_only = #{record.gIsOnly,jdbcType=TINYINT},
       g_status = #{record.gStatus,jdbcType=TINYINT},
+      goods_is_new = #{record.goodsIsNew,jdbcType=TINYINT},
+      g_new_start = #{record.gNewStart,jdbcType=TINYINT},
       g_say_point = #{record.gSayPoint,jdbcType=VARCHAR},
       g_create_time = #{record.gCreateTime,jdbcType=BIGINT},
       g_create_id = #{record.gCreateId,jdbcType=VARCHAR},
@@ -346,6 +392,9 @@
       <if test="gTypeId != null" >
         g_type_id = #{gTypeId,jdbcType=BIGINT},
       </if>
+      <if test="gTypePid != null" >
+        g_type_pid = #{gTypePid,jdbcType=BIGINT},
+      </if>
       <if test="gName != null" >
         g_name = #{gName,jdbcType=VARCHAR},
       </if>
@@ -364,8 +413,17 @@
       <if test="gSort != null" >
         g_sort = #{gSort,jdbcType=BIGINT},
       </if>
+      <if test="gIsOnly != null" >
+        g_is_only = #{gIsOnly,jdbcType=TINYINT},
+      </if>
       <if test="gStatus != null" >
         g_status = #{gStatus,jdbcType=TINYINT},
+      </if>
+      <if test="goodsIsNew != null" >
+        goods_is_new = #{goodsIsNew,jdbcType=TINYINT},
+      </if>
+      <if test="gNewStart != null" >
+        g_new_start = #{gNewStart,jdbcType=TINYINT},
       </if>
       <if test="gSayPoint != null" >
         g_say_point = #{gSayPoint,jdbcType=VARCHAR},
@@ -400,13 +458,17 @@
   <update id="updateByPrimaryKey" parameterType="com.live.liveteam.entity.Goods" >
     update goods
     set g_type_id = #{gTypeId,jdbcType=BIGINT},
+      g_type_pid = #{gTypePid,jdbcType=BIGINT},
       g_name = #{gName,jdbcType=VARCHAR},
       g_full_name = #{gFullName,jdbcType=VARCHAR},
       g_image = #{gImage,jdbcType=VARCHAR},
       g_price = #{gPrice,jdbcType=BIGINT},
       g_sale_price = #{gSalePrice,jdbcType=BIGINT},
       g_sort = #{gSort,jdbcType=BIGINT},
+      g_is_only = #{gIsOnly,jdbcType=TINYINT},
       g_status = #{gStatus,jdbcType=TINYINT},
+      goods_is_new = #{goodsIsNew,jdbcType=TINYINT},
+      g_new_start = #{gNewStart,jdbcType=TINYINT},
       g_say_point = #{gSayPoint,jdbcType=VARCHAR},
       g_create_time = #{gCreateTime,jdbcType=BIGINT},
       g_create_id = #{gCreateId,jdbcType=VARCHAR},

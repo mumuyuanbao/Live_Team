@@ -18,6 +18,8 @@ public class GoodsDetailVO {
     private Goods goods;
     private GoodsDetail goodsDetail;
     private Map<String,List<GoodsMadeUp>> goodsMadeUps;
+    private Long goodsSnapUpStartTime;
+    private Long goodsSnapUpStopTime;
 
 
     public Goods getGoods() {
@@ -42,5 +44,21 @@ public class GoodsDetailVO {
 
     public void setGoodsMadeUps(Map<String, List<GoodsMadeUp>> goodsMadeUps) {
         this.goodsMadeUps = goodsMadeUps;
+    }
+
+    public Long getGoodsSnapUpStartTime() {
+        return goodsSnapUpStartTime;
+    }
+
+    public void setGoodsSnapUpStartTime(Long goodsSnapUpStartTime) {
+        this.goodsSnapUpStartTime = goodsSnapUpStartTime;
+    }
+
+    public Long getGoodsSnapUpStopTime() {
+        return goodsSnapUpStopTime;
+    }
+
+    public void setGoodsSnapUpStopTime(Long goodsSnapUpStopTime) {
+        this.goodsSnapUpStopTime = goodsSnapUpStopTime;
     }
 }

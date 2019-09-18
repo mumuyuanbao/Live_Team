@@ -4,9 +4,7 @@ import com.live.liveteam.entity.Goods;
 import com.live.liveteam.entity.GoodsExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface GoodsMapper {
     int countByExample(GoodsExample example);
 

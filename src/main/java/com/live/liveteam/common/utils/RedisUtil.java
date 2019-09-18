@@ -22,9 +22,22 @@ public class RedisUtil {
      * token储存路径
      */
     public static final String LOGIN_USER_STRING = "member:Token:";
-    public static final String GOODS_DETAIL_MAP = "goods:map:one:";
-    public static final String GOODS_TYPEONE_LOCK="goods:tpyeone:lock";
+    public static final String GOODS_DETAIL_MAP = "goods:map:list:";
+
     public static final String USER_QUERY_SEARCH_RECORD="user:goods:query:";
+    public static final String GOODS_SNAP_UP="goods:snap:up";
+    public static  final  String GOODS_ONLY_CHOOSE="goods:only:choose";
+    public static  final  String GOODS_NEW_TYPE="goods:new:type";
+
+    /**
+     * redis锁
+     */
+    public static final String GOODS_TYPEONE_LOCK="goods:tpyeone:lock";
+    public static final String GOODS_SNAP_UP_LOCK="goods:snap:up:lock";
+    public static final String GOODS_ONLY_CHOOSE_LOCK="goods:only:choose:lock";
+    public static final String GOODS_NEW_TYPE_LOCK="goods:new:lock";
+
+
     public  static  final long USER_TOKEN_TIME= 6*60*60;
     /**
      * 用户总积分储存路径 储存时间为永久存在

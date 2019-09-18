@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel("登录返回用户标识")
 public class UserTokenVO {
-    @ApiModelProperty("用户token（每次登录会更新，token=openId）")
+    @ApiModelProperty("用户openId（每次登录会更新，token=openId）")
     private String token;
 
     public String getToken() {

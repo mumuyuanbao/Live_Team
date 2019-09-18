@@ -3,6 +3,8 @@ package com.live.liveteam.vo;
 
 import com.live.liveteam.entity.OrderDetails;
 import com.live.liveteam.entity.Orders;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
 
@@ -11,36 +13,37 @@ import java.util.List;
  * 时间2019-09-09 11:08
  * 描述：返回商品详情
  */
+@ApiModel("订单详情")
 public class OrderDetailsVO {
-
+    @ApiModelProperty("订单创建时间")
     private String orderNum;
-
+    @ApiModelProperty("订单创建时间")
     private Long openId;
-
+    @ApiModelProperty("订单创建时间")
     private Integer orderStatus;
-
+    @ApiModelProperty("订单创建时间")
     private Long addressId;
-
+    @ApiModelProperty("订单创建时间")
     private Long orderPriceTotal;
-
+    @ApiModelProperty("订单创建时间")
     private Long orderGoodsNum;
-
+    @ApiModelProperty("订单创建时间")
     private String couponsIds;
-
+    @ApiModelProperty("订单创建时间")
     private Long orderAffirm;
-
+    @ApiModelProperty("订单创建时间")
     private String orderCancelCause;
-
+    @ApiModelProperty("订单创建时间")
     private Long orderPayTime;
-
+    @ApiModelProperty("订单创建时间")
     private Long createTime;
-
+    @ApiModelProperty("订单创建时间")
     private Long orderUpdate;
-
+    @ApiModelProperty("订单创建时间")
     private Long orderCouponsPrice;
-
+    @ApiModelProperty("订单创建时间")
     private Long orderScore;
-
+    @ApiModelProperty("订单创建时间")
     private Long orderCancelTime;
 
    private List<OrderDetails> orderDetailsList;

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.live.liveteam.mapper.GoodsSnapUpMapper" >
+  <resultMap id="BaseResultMap" type="com.live.liveteam.entity.GoodsSnapUp" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="g_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="g_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="g_status" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="g_price" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="g_inventory" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="g_start_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="g_stop_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="g_sale_proce" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="create_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="create_user" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="update_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="update_user" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, g_id, g_url, g_status, g_price, g_inventory, g_start_time, g_stop_time, g_sale_proce, 
+    create_time, create_user, update_time, update_user
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.live.liveteam.entity.GoodsSnapUpExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from goods_snap_up
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods_snap_up
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from goods_snap_up
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.live.liveteam.entity.GoodsSnapUpExample" >
+    delete from goods_snap_up
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.live.liveteam.entity.GoodsSnapUp" >
+    insert into goods_snap_up (id, g_id, g_url, 
+      g_status, g_price, g_inventory, 
+      g_start_time, g_stop_time, g_sale_proce, 
+      create_time, create_user, update_time, 
+      update_user)
+    values (#{id,jdbcType=BIGINT}, #{gId,jdbcType=BIGINT}, #{gUrl,jdbcType=VARCHAR}, 
+      #{gStatus,jdbcType=TINYINT}, #{gPrice,jdbcType=BIGINT}, #{gInventory,jdbcType=BIGINT}, 
+      #{gStartTime,jdbcType=BIGINT}, #{gStopTime,jdbcType=BIGINT}, #{gSaleProce,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=BIGINT}, #{createUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=BIGINT}, 
+      #{updateUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.live.liveteam.entity.GoodsSnapUp" >
+    insert into goods_snap_up
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="gId != null" >
+        g_id,
+      </if>
+      <if test="gUrl != null" >
+        g_url,
+      </if>
+      <if test="gStatus != null" >
+        g_status,
+      </if>
+      <if test="gPrice != null" >
+        g_price,
+      </if>
+      <if test="gInventory != null" >
+        g_inventory,
+      </if>
+      <if test="gStartTime != null" >
+        g_start_time,
+      </if>
+      <if test="gStopTime != null" >
+        g_stop_time,
+      </if>
+      <if test="gSaleProce != null" >
+        g_sale_proce,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updateUser != null" >
+        update_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gId != null" >
+        #{gId,jdbcType=BIGINT},
+      </if>
+      <if test="gUrl != null" >
+        #{gUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="gStatus != null" >
+        #{gStatus,jdbcType=TINYINT},
+      </if>
+      <if test="gPrice != null" >
+        #{gPrice,jdbcType=BIGINT},
+      </if>
+      <if test="gInventory != null" >
+        #{gInventory,jdbcType=BIGINT},
+      </if>
+      <if test="gStartTime != null" >
+        #{gStartTime,jdbcType=BIGINT},
+      </if>
+      <if test="gStopTime != null" >
+        #{gStopTime,jdbcType=BIGINT},
+      </if>
+      <if test="gSaleProce != null" >
+        #{gSaleProce,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.live.liveteam.entity.GoodsSnapUpExample" resultType="java.lang.Integer" >
+    select count(*) from goods_snap_up
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update goods_snap_up
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.gId != null" >
+        g_id = #{record.gId,jdbcType=BIGINT},
+      </if>
+      <if test="record.gUrl != null" >
+        g_url = #{record.gUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gStatus != null" >
+        g_status = #{record.gStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.gPrice != null" >
+        g_price = #{record.gPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.gInventory != null" >
+        g_inventory = #{record.gInventory,jdbcType=BIGINT},
+      </if>
+      <if test="record.gStartTime != null" >
+        g_start_time = #{record.gStartTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.gStopTime != null" >
+        g_stop_time = #{record.gStopTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.gSaleProce != null" >
+        g_sale_proce = #{record.gSaleProce,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.createUser != null" >
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateUser != null" >
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update goods_snap_up
+    set id = #{record.id,jdbcType=BIGINT},
+      g_id = #{record.gId,jdbcType=BIGINT},
+      g_url = #{record.gUrl,jdbcType=VARCHAR},
+      g_status = #{record.gStatus,jdbcType=TINYINT},
+      g_price = #{record.gPrice,jdbcType=BIGINT},
+      g_inventory = #{record.gInventory,jdbcType=BIGINT},
+      g_start_time = #{record.gStartTime,jdbcType=BIGINT},
+      g_stop_time = #{record.gStopTime,jdbcType=BIGINT},
+      g_sale_proce = #{record.gSaleProce,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=BIGINT},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=BIGINT},
+      update_user = #{record.updateUser,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.live.liveteam.entity.GoodsSnapUp" >
+    update goods_snap_up
+    <set >
+      <if test="gId != null" >
+        g_id = #{gId,jdbcType=BIGINT},
+      </if>
+      <if test="gUrl != null" >
+        g_url = #{gUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="gStatus != null" >
+        g_status = #{gStatus,jdbcType=TINYINT},
+      </if>
+      <if test="gPrice != null" >
+        g_price = #{gPrice,jdbcType=BIGINT},
+      </if>
+      <if test="gInventory != null" >
+        g_inventory = #{gInventory,jdbcType=BIGINT},
+      </if>
+      <if test="gStartTime != null" >
+        g_start_time = #{gStartTime,jdbcType=BIGINT},
+      </if>
+      <if test="gStopTime != null" >
+        g_stop_time = #{gStopTime,jdbcType=BIGINT},
+      </if>
+      <if test="gSaleProce != null" >
+        g_sale_proce = #{gSaleProce,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="createUser != null" >
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateUser != null" >
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.live.liveteam.entity.GoodsSnapUp" >
+    update goods_snap_up
+    set g_id = #{gId,jdbcType=BIGINT},
+      g_url = #{gUrl,jdbcType=VARCHAR},
+      g_status = #{gStatus,jdbcType=TINYINT},
+      g_price = #{gPrice,jdbcType=BIGINT},
+      g_inventory = #{gInventory,jdbcType=BIGINT},
+      g_start_time = #{gStartTime,jdbcType=BIGINT},
+      g_stop_time = #{gStopTime,jdbcType=BIGINT},
+      g_sale_proce = #{gSaleProce,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      update_user = #{updateUser,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
