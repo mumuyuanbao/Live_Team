@@ -28,7 +28,7 @@ public class Swagger {
     public Docket createRestApi() {
         ParameterBuilder tokenPar1 = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<Parameter>();
-        tokenPar1.name("token").description("令牌：用户登陆成功后需传").modelRef(new ModelRef("string")).parameterType("header")
+        tokenPar1.name("openId").description("令牌：用户登陆成功后需传用户唯一标识").modelRef(new ModelRef("string")).parameterType("header")
             .required(false).build();
         pars.add(tokenPar1.build());
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()

@@ -1,18 +1,17 @@
 package com.live.liveteam.controller;
 
-import com.live.liveteam.common.result.PageVO;
 import com.live.liveteam.common.result.ResultVO;
-import com.live.liveteam.entity.Coupons;
 import com.live.liveteam.service.CouponsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.xml.transform.Result;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,5 +43,28 @@ public class CouponsController {
         return couponsService.queryCouponsUsefulNumber(openId);
     }
 
+    @ApiOperation("(订单界面)获取用户可用优惠券数量")
+    @GetMapping("queryCouponsOrderNumber")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "openId", value = "openId", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "goodsId", value = "goodsId", dataType = "String", paramType = "query")
+    })
+    public ResultVO<Long> queryCouponsOrderNumber(String openId, String goodsId) {
+
+
+        return couponsService.queryCouponsOrderUsefulNumber(openId, goodsId);
+    }
+
+    @ApiOperation("(订单界面)获取用户可用优惠券")
+    @GetMapping("queryCouponsOrder")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "openId", value = "openId", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "goodsId", value = "goodsId", dataType = "String", paramType = "query")
+    })
+    public ResultVO<List> queryCouponsOrder(String openId, String goodsId) {
+
+
+        return couponsService.queryCouponsOrderUseful(openId, goodsId);
+    }
 
 }

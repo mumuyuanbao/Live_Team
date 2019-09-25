@@ -154,24 +154,34 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public ResultVO<UpdateUserVO> toQueryUserInfo(String token) {
+    public ResultVO<UpdateUserVO> toQueryUserInfo(String openId) {
         ResultVO<UpdateUserVO> result = new ResultVO<UpdateUserVO>();
         UpdateUserVO updateUserVO = new UpdateUserVO();
-        Object info = redisUtil.get(token);
+        Object info = redisUtil.get(openId);
+        User user=new User();
         if (info != null) {
             //json转实体类
-            User user = JSONObject.parseObject(JSONObject.toJSONString(info), User.class);
-            //实体类转换
-            updateUserVO.setAvatarUrl(user.getAvatarUrl());
-            updateUserVO.setGender(user.getGender());
-            updateUserVO.setNickName(user.getNickName());
-            updateUserVO.setUserBirthday(user.getUserBirthday());
-            //判断是否可以修改生日
-            if (user.getUserIsNot() == 1) {
-                updateUserVO.setUserIsNot(false);
-            } else {
-                updateUserVO.setUserIsNot(true);
+          user = JSONObject.parseObject(JSONObject.toJSONString(info), User.class);
+
+        }else {
+            //如果redis无用户信息，查询数据库
+           user = userMapper.selectByPrimaryKey(openId);
+            if (user!=null){
+                redisUtil.set(RedisUtil.LOGIN_USER_STRING+openId,user);
+            }else {
+                throw new BizException(EnumResult.USER_CHECK_LOGIN_ERROR);
             }
+        }
+        //实体类转换
+        updateUserVO.setAvatarUrl(user.getAvatarUrl());
+        updateUserVO.setGender(user.getGender());
+        updateUserVO.setNickName(user.getNickName());
+        updateUserVO.setUserBirthday(user.getUserBirthday());
+        //判断是否可以修改生日
+        if (user.getUserIsNot() == 1) {
+            updateUserVO.setUserIsNot(false);
+        } else {
+            updateUserVO.setUserIsNot(true);
         }
         result.setData(updateUserVO);
         result.setCode(EnumResult.SUCCESS.getCode());
@@ -183,11 +193,11 @@ public class UserServiceImpl implements UserService {
      * 绑定用户手机号，若已经绑定无法修改
      *
      * @param phone
-     * @param token
+     * @param openId
      * @return
      */
     @Override
-    public SimpleResultVO inseryUserPhone(String phone, String token) {
+    public SimpleResultVO inseryUserPhone(String phone, String openId) {
 
 
         return null;
@@ -200,7 +210,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public SimpleResultVO updateUserInfo(UpdateUserReq req, String token) {
+    public SimpleResultVO updateUserInfo(UpdateUserReq req, String openId) {
         SimpleResultVO result = new SimpleResultVO();
         User user = new User();
         if (req != null) {
@@ -208,20 +218,23 @@ public class UserServiceImpl implements UserService {
             user.setGender(req.getGender());
             user.setNickName(req.getNickName());
         }
-        Object userInfo = redisUtil.get(token);
+        Object userInfo = redisUtil.get(openId);
         String info = JSON.toJSONString(userInfo);
         User user2 = JSONObject.parseObject(info, User.class);
         user.setOpenId(user2.getOpenId());
-        if (user2.getUserIsNot() == 0) {
-            user.setUserBirthday(req.getUserBirthday());
-            user.setUserIsNot(1);
+        //如果用户可以修改生日
+        if (req.getUserBirthday()!=null){
+            if (user2.getUserIsNot() == 0) {
+                user.setUserBirthday(req.getUserBirthday());
+                user.setUserIsNot(1);
+            }
         }
         //想数据库更新userinfo具体值
         int count = userMapper.updateByPrimaryKeySelective(user);
         //修改redis缓存中的值
         if (count > 0) {
             BeanUtils.copyProperties(user2, user);
-            redisUtil.set(RedisUtil.LOGIN_USER_STRING + token, user2);
+            redisUtil.set(RedisUtil.LOGIN_USER_STRING + openId, user2);
         }
         result.setCode(EnumResult.SUCCESS.getCode());
         result.setMsg(EnumResult.SUCCESS.getMsg());

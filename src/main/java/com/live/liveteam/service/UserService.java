@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface UserService {
 
-    SimpleResultVO updateUserInfo(UpdateUserReq req,String token);
+    SimpleResultVO updateUserInfo(UpdateUserReq req,String openId);
 
     ResultVO<UserTokenVO> login(String code, String rawData, String signature, String encrypteData, String iv, Integer userIdevice, HttpServletRequest request);
 
-    ResultVO<UpdateUserVO> toQueryUserInfo(String token);
+    ResultVO<UpdateUserVO> toQueryUserInfo(String openId);
 
-    SimpleResultVO inseryUserPhone(String phone, String token);
+    SimpleResultVO inseryUserPhone(String phone, String openId);
 
 }

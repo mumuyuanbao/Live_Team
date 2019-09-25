@@ -19,7 +19,7 @@ import java.io.IOException;
  * 时间2019-09-11 11:53
  * 描述：
  */
-@Api("二维码")
+@Api(description = "用户个人二维码")
 @RestController
 @RequestMapping("core")
 public class CoreController {

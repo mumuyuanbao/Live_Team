@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.live.liveteam.mapper.GoodsDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.live.liveteam.entity.GoodsDetail" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="g_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="g_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="g_detail" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="create_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="update_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="update_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="g_images" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, g_id, g_desc, g_detail, create_time, create_name, update_time, update_name, g_images
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.live.liveteam.entity.GoodsDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from goods_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByGId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from goods_detail
+    where g_id = #{gId,jdbcType=BIGINT}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from goods_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.live.liveteam.entity.GoodsDetailExample" >
+    delete from goods_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.live.liveteam.entity.GoodsDetail" >
+    insert into goods_detail (id, g_id, g_desc, 
+      g_detail, create_time, create_name, 
+      update_time, update_name, g_images
+      )
+    values (#{id,jdbcType=BIGINT}, #{gId,jdbcType=BIGINT}, #{gDesc,jdbcType=VARCHAR}, 
+      #{gDetail,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, #{createName,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=BIGINT}, #{updateName,jdbcType=VARCHAR}, #{gImages,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.live.liveteam.entity.GoodsDetail" >
+    insert into goods_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="gId != null" >
+        g_id,
+      </if>
+      <if test="gDesc != null" >
+        g_desc,
+      </if>
+      <if test="gDetail != null" >
+        g_detail,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createName != null" >
+        create_name,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updateName != null" >
+        update_name,
+      </if>
+      <if test="gImages != null" >
+        g_images,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gId != null" >
+        #{gId,jdbcType=BIGINT},
+      </if>
+      <if test="gDesc != null" >
+        #{gDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="gDetail != null" >
+        #{gDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateName != null" >
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="gImages != null" >
+        #{gImages,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.live.liveteam.entity.GoodsDetailExample" resultType="java.lang.Integer" >
+    select count(*) from goods_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update goods_detail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.gId != null" >
+        g_id = #{record.gId,jdbcType=BIGINT},
+      </if>
+      <if test="record.gDesc != null" >
+        g_desc = #{record.gDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gDetail != null" >
+        g_detail = #{record.gDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.createName != null" >
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateName != null" >
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gImages != null" >
+        g_images = #{record.gImages,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update goods_detail
+    set id = #{record.id,jdbcType=BIGINT},
+      g_id = #{record.gId,jdbcType=BIGINT},
+      g_desc = #{record.gDesc,jdbcType=VARCHAR},
+      g_detail = #{record.gDetail,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=BIGINT},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=BIGINT},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      g_images = #{record.gImages,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.live.liveteam.entity.GoodsDetail" >
+    update goods_detail
+    <set >
+      <if test="gId != null" >
+        g_id = #{gId,jdbcType=BIGINT},
+      </if>
+      <if test="gDesc != null" >
+        g_desc = #{gDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="gDetail != null" >
+        g_detail = #{gDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="createName != null" >
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateName != null" >
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="gImages != null" >
+        g_images = #{gImages,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.live.liveteam.entity.GoodsDetail" >
+    update goods_detail
+    set g_id = #{gId,jdbcType=BIGINT},
+      g_desc = #{gDesc,jdbcType=VARCHAR},
+      g_detail = #{gDetail,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      create_name = #{createName,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      g_images = #{gImages,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -224,6 +224,66 @@ public class GoodsExample {
             return (Criteria) this;
         }
 
+        public Criteria andGTypePidIsNull() {
+            addCriterion("g_type_pid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypePidIsNotNull() {
+            addCriterion("g_type_pid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypePidEqualTo(Long value) {
+            addCriterion("g_type_pid =", value, "gTypePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypePidNotEqualTo(Long value) {
+            addCriterion("g_type_pid <>", value, "gTypePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypePidGreaterThan(Long value) {
+            addCriterion("g_type_pid >", value, "gTypePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypePidGreaterThanOrEqualTo(Long value) {
+            addCriterion("g_type_pid >=", value, "gTypePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypePidLessThan(Long value) {
+            addCriterion("g_type_pid <", value, "gTypePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypePidLessThanOrEqualTo(Long value) {
+            addCriterion("g_type_pid <=", value, "gTypePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypePidIn(List<Long> values) {
+            addCriterion("g_type_pid in", values, "gTypePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypePidNotIn(List<Long> values) {
+            addCriterion("g_type_pid not in", values, "gTypePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypePidBetween(Long value1, Long value2) {
+            addCriterion("g_type_pid between", value1, value2, "gTypePid");
+            return (Criteria) this;
+        }
+
+        public Criteria andGTypePidNotBetween(Long value1, Long value2) {
+            addCriterion("g_type_pid not between", value1, value2, "gTypePid");
+            return (Criteria) this;
+        }
+
         public Criteria andGNameIsNull() {
             addCriterion("g_name is null");
             return (Criteria) this;
@@ -614,6 +674,66 @@ public class GoodsExample {
             return (Criteria) this;
         }
 
+        public Criteria andGIsOnlyIsNull() {
+            addCriterion("g_is_only is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGIsOnlyIsNotNull() {
+            addCriterion("g_is_only is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGIsOnlyEqualTo(Byte value) {
+            addCriterion("g_is_only =", value, "gIsOnly");
+            return (Criteria) this;
+        }
+
+        public Criteria andGIsOnlyNotEqualTo(Byte value) {
+            addCriterion("g_is_only <>", value, "gIsOnly");
+            return (Criteria) this;
+        }
+
+        public Criteria andGIsOnlyGreaterThan(Byte value) {
+            addCriterion("g_is_only >", value, "gIsOnly");
+            return (Criteria) this;
+        }
+
+        public Criteria andGIsOnlyGreaterThanOrEqualTo(Byte value) {
+            addCriterion("g_is_only >=", value, "gIsOnly");
+            return (Criteria) this;
+        }
+
+        public Criteria andGIsOnlyLessThan(Byte value) {
+            addCriterion("g_is_only <", value, "gIsOnly");
+            return (Criteria) this;
+        }
+
+        public Criteria andGIsOnlyLessThanOrEqualTo(Byte value) {
+            addCriterion("g_is_only <=", value, "gIsOnly");
+            return (Criteria) this;
+        }
+
+        public Criteria andGIsOnlyIn(List<Byte> values) {
+            addCriterion("g_is_only in", values, "gIsOnly");
+            return (Criteria) this;
+        }
+
+        public Criteria andGIsOnlyNotIn(List<Byte> values) {
+            addCriterion("g_is_only not in", values, "gIsOnly");
+            return (Criteria) this;
+        }
+
+        public Criteria andGIsOnlyBetween(Byte value1, Byte value2) {
+            addCriterion("g_is_only between", value1, value2, "gIsOnly");
+            return (Criteria) this;
+        }
+
+        public Criteria andGIsOnlyNotBetween(Byte value1, Byte value2) {
+            addCriterion("g_is_only not between", value1, value2, "gIsOnly");
+            return (Criteria) this;
+        }
+
         public Criteria andGStatusIsNull() {
             addCriterion("g_status is null");
             return (Criteria) this;
@@ -671,6 +791,126 @@ public class GoodsExample {
 
         public Criteria andGStatusNotBetween(Byte value1, Byte value2) {
             addCriterion("g_status not between", value1, value2, "gStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsIsNewIsNull() {
+            addCriterion("goods_is_new is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsIsNewIsNotNull() {
+            addCriterion("goods_is_new is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsIsNewEqualTo(Byte value) {
+            addCriterion("goods_is_new =", value, "goodsIsNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsIsNewNotEqualTo(Byte value) {
+            addCriterion("goods_is_new <>", value, "goodsIsNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsIsNewGreaterThan(Byte value) {
+            addCriterion("goods_is_new >", value, "goodsIsNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsIsNewGreaterThanOrEqualTo(Byte value) {
+            addCriterion("goods_is_new >=", value, "goodsIsNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsIsNewLessThan(Byte value) {
+            addCriterion("goods_is_new <", value, "goodsIsNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsIsNewLessThanOrEqualTo(Byte value) {
+            addCriterion("goods_is_new <=", value, "goodsIsNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsIsNewIn(List<Byte> values) {
+            addCriterion("goods_is_new in", values, "goodsIsNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsIsNewNotIn(List<Byte> values) {
+            addCriterion("goods_is_new not in", values, "goodsIsNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsIsNewBetween(Byte value1, Byte value2) {
+            addCriterion("goods_is_new between", value1, value2, "goodsIsNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andGoodsIsNewNotBetween(Byte value1, Byte value2) {
+            addCriterion("goods_is_new not between", value1, value2, "goodsIsNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andGNewStartIsNull() {
+            addCriterion("g_new_start is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGNewStartIsNotNull() {
+            addCriterion("g_new_start is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGNewStartEqualTo(Byte value) {
+            addCriterion("g_new_start =", value, "gNewStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andGNewStartNotEqualTo(Byte value) {
+            addCriterion("g_new_start <>", value, "gNewStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andGNewStartGreaterThan(Byte value) {
+            addCriterion("g_new_start >", value, "gNewStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andGNewStartGreaterThanOrEqualTo(Byte value) {
+            addCriterion("g_new_start >=", value, "gNewStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andGNewStartLessThan(Byte value) {
+            addCriterion("g_new_start <", value, "gNewStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andGNewStartLessThanOrEqualTo(Byte value) {
+            addCriterion("g_new_start <=", value, "gNewStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andGNewStartIn(List<Byte> values) {
+            addCriterion("g_new_start in", values, "gNewStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andGNewStartNotIn(List<Byte> values) {
+            addCriterion("g_new_start not in", values, "gNewStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andGNewStartBetween(Byte value1, Byte value2) {
+            addCriterion("g_new_start between", value1, value2, "gNewStart");
+            return (Criteria) this;
+        }
+
+        public Criteria andGNewStartNotBetween(Byte value1, Byte value2) {
+            addCriterion("g_new_start not between", value1, value2, "gNewStart");
             return (Criteria) this;
         }
 

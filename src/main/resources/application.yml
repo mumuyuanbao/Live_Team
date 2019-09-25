@@ -5,10 +5,18 @@ spring:
     username: root
     password: Lin1997426520.
   redis:
-    host:  47.94.157.36 #个人服务器
-    password: 123456
-    port: 6379
-    timeout: 3000
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+    timeout: 10000
+    database: 0
+    sentinel:
+      master: mymaster
+      nodes: 47.98.136.252:26379,47.98.136.252:26380,47.98.136.252:26381
+    password: java1904
 pagehelper:
   helper-dialect: mysql
   params: count=countSql

@@ -1,54 +1,60 @@
 package com.live.liveteam.entity;
 
 import com.live.liveteam.common.utils.DateUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+@ApiModel("用户信息")
 public class User {
+
+    @ApiModelProperty("用户openId（唯一）")
     private String openId;
-
+    @ApiModelProperty("sessionKey")
     private String sessionKey;
-
+    @ApiModelProperty("城市")
     private String city;
-
+    @ApiModelProperty("省份")
     private String province;
-
+    @ApiModelProperty("国家")
     private String country;
-
+    @ApiModelProperty("头像地址")
     private String avatarUrl;
-
+    @ApiModelProperty("性别0-女 1-男")
     private Integer gender;
-
+    @ApiModelProperty("年龄")
     private Integer age;
-
+    @ApiModelProperty("邮箱")
     private String userEmail;
-
+    @ApiModelProperty("用户名")
     private String nickName;
-
+    @ApiModelProperty("用户所在地邮编")
     private Long userPostal;
-
+    @ApiModelProperty("用户生日（时间戳-秒）")
     private Long userBirthday;
-
+    @ApiModelProperty("用户手机号码")
     private String userIphone;
-
+    @ApiModelProperty("用户真实姓名")
     private String realname;
-
+    @ApiModelProperty("sessionKey")
     private String cardId;
-
+    @ApiModelProperty("用户个人二维码地址")
     private String qrCodeUrl;
-
+    @ApiModelProperty("用户最近登录设备")
     private Integer userIdevice;
-
+    @ApiModelProperty("会员类型 0-青铜会员 1-白银会员 2-白金会员 ")
     private Integer userForm;
-
+    @ApiModelProperty("用户信息是否可修改生日  默认只能修改一次 0-可修改 1不可修改")
     private Integer userIsNot;
-
+    @ApiModelProperty("用户最后登录IP")
     private String userLastIp;
-
+    @ApiModelProperty("用户登录总次数")
     private Long userLoginNum;
-
+    @ApiModelProperty("用户登录最后地址")
     private String userLoginAddress;
-
+    @ApiModelProperty("创建时间-时间戳")
     private Long createTime;
-
+    @ApiModelProperty("最后登录时间-时间戳")
     private Long lastVisitTime;
 
     public static User newUserEntity(){

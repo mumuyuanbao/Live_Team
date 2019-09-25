@@ -13,6 +13,7 @@ public class GoodsListVO {
     private Long gTypeId;
 
     private String gName;
+    private  Long gSort;
 
     private String gFullName;
 
@@ -62,6 +63,14 @@ public class GoodsListVO {
 
     public Long getgPrice() {
         return gPrice;
+    }
+
+    public Long getgSort() {
+        return gSort;
+    }
+
+    public void setgSort(Long gSort) {
+        this.gSort = gSort;
     }
 
     public void setgPrice(Long gPrice) {

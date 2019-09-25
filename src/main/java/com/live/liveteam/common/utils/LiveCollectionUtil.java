@@ -5,8 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.live.liveteam.common.result.PageVO;
+import com.live.liveteam.entity.Goods;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.util.CollectionUtils;
+
+import javax.naming.directory.SearchResult;
 
 /**
  * 集合工具类
@@ -87,4 +94,6 @@ public class LiveCollectionUtil {
         }
         return sb.toString();
     }
+
+
     }

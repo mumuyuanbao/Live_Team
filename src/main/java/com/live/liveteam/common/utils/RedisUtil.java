@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import com.live.liveteam.entity.Goods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,22 @@ public class RedisUtil {
      * token储存路径
      */
     public static final String LOGIN_USER_STRING = "member:Token:";
+    public static final String GOODS_DETAIL_MAP = "goods:map:list:";
+
+    public static final String USER_QUERY_SEARCH_RECORD="user:goods:query:";
+    public static final String GOODS_SNAP_UP="goods:snap:up";
+    public static  final  String GOODS_ONLY_CHOOSE="goods:only:choose";
+    public static  final  String GOODS_NEW_TYPE="goods:new:type";
+
+    /**
+     * redis锁
+     */
+    public static final String GOODS_TYPEONE_LOCK="goods:tpyeone:lock";
+    public static final String GOODS_SNAP_UP_LOCK="goods:snap:up:lock";
+    public static final String GOODS_ONLY_CHOOSE_LOCK="goods:only:choose:lock";
+    public static final String GOODS_NEW_TYPE_LOCK="goods:new:lock";
+
+
     public  static  final long USER_TOKEN_TIME= 6*60*60;
     /**
      * 用户总积分储存路径 储存时间为永久存在
@@ -208,6 +225,24 @@ public class RedisUtil {
             return false;
         }
     }
+
+    /**
+     * HashSet
+     *
+     * @param key 键
+     * @param map 对应多个键值
+     * @return true 成功 false 失败
+     */
+    public boolean hmsetGoods(String key, Map<String,Goods> map) {
+        try {
+            redisTemplate.opsForHash().putAll(key, map);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     /**
      * HashSet 并设置时间
