@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.live.liveteam.mapper.AddressDestMapper" >
+  <resultMap id="BaseResultMap" type="com.live.liveteam.entity.AddressDest" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="open_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="c_country_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="p_province_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="c_city_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="a_area_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="detailed_address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="dest_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="dest_iphone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="tag" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="staus" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="if_default" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="create_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="update_time" jdbcType="BIGINT" javaType="java.lang.Long" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, open_id, c_country_id, p_province_id, c_city_id, a_area_id, detailed_address, 
+    dest_name, dest_iphone, tag, staus, if_default, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.live.liveteam.entity.AddressDestExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from address_dest
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from address_dest
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+<!--  新建根据Open_id查询-->
+  <select id="selectByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from address_dest
+    where open_id = #{open_id,jdbcType=VARCHAR} and staus = 1 ORDER BY update_time DESC
+  </select>
+
+<!--  新增根据openid更新字段-->
+  <update id="updateByOpenId" parameterType="java.lang.String" >
+
+    update address_dest set if_default= 0 where open_id= #{open_id,jdbcType=VARCHAR}
+
+  </update>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from address_dest
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.live.liveteam.entity.AddressDestExample" >
+    delete from address_dest
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.live.liveteam.entity.AddressDest" >
+    insert into address_dest (id, open_id, c_country_id, 
+      p_province_id, c_city_id, a_area_id, 
+      detailed_address, dest_name, dest_iphone, 
+      tag, staus, if_default, 
+      create_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{openId,jdbcType=VARCHAR}, #{cCountryId,jdbcType=BIGINT}, 
+      #{pProvinceId,jdbcType=BIGINT}, #{cCityId,jdbcType=BIGINT}, #{aAreaId,jdbcType=BIGINT}, 
+      #{detailedAddress,jdbcType=VARCHAR}, #{destName,jdbcType=VARCHAR}, #{destIphone,jdbcType=VARCHAR}, 
+      #{tag,jdbcType=VARCHAR}, #{staus,jdbcType=TINYINT}, #{ifDefault,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.live.liveteam.entity.AddressDest" >
+    insert into address_dest
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="cCountryId != null" >
+        c_country_id,
+      </if>
+      <if test="pProvinceId != null" >
+        p_province_id,
+      </if>
+      <if test="cCityId != null" >
+        c_city_id,
+      </if>
+      <if test="aAreaId != null" >
+        a_area_id,
+      </if>
+      <if test="detailedAddress != null" >
+        detailed_address,
+      </if>
+      <if test="destName != null" >
+        dest_name,
+      </if>
+      <if test="destIphone != null" >
+        dest_iphone,
+      </if>
+      <if test="tag != null" >
+        tag,
+      </if>
+      <if test="staus != null" >
+        staus,
+      </if>
+      <if test="ifDefault != null" >
+        if_default,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="cCountryId != null" >
+        #{cCountryId,jdbcType=BIGINT},
+      </if>
+      <if test="pProvinceId != null" >
+        #{pProvinceId,jdbcType=BIGINT},
+      </if>
+      <if test="cCityId != null" >
+        #{cCityId,jdbcType=BIGINT},
+      </if>
+      <if test="aAreaId != null" >
+        #{aAreaId,jdbcType=BIGINT},
+      </if>
+      <if test="detailedAddress != null" >
+        #{detailedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="destName != null" >
+        #{destName,jdbcType=VARCHAR},
+      </if>
+      <if test="destIphone != null" >
+        #{destIphone,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null" >
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="staus != null" >
+        #{staus,jdbcType=TINYINT},
+      </if>
+      <if test="ifDefault != null" >
+        #{ifDefault,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.live.liveteam.entity.AddressDestExample" resultType="java.lang.Integer" >
+    select count(*) from address_dest
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update address_dest
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.openId != null" >
+        open_id = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cCountryId != null" >
+        c_country_id = #{record.cCountryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pProvinceId != null" >
+        p_province_id = #{record.pProvinceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cCityId != null" >
+        c_city_id = #{record.cCityId,jdbcType=BIGINT},
+      </if>
+      <if test="record.aAreaId != null" >
+        a_area_id = #{record.aAreaId,jdbcType=BIGINT},
+      </if>
+      <if test="record.detailedAddress != null" >
+        detailed_address = #{record.detailedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.destName != null" >
+        dest_name = #{record.destName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.destIphone != null" >
+        dest_iphone = #{record.destIphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tag != null" >
+        tag = #{record.tag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staus != null" >
+        staus = #{record.staus,jdbcType=TINYINT},
+      </if>
+      <if test="record.ifDefault != null" >
+        if_default = #{record.ifDefault,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update address_dest
+    set id = #{record.id,jdbcType=BIGINT},
+      open_id = #{record.openId,jdbcType=VARCHAR},
+      c_country_id = #{record.cCountryId,jdbcType=BIGINT},
+      p_province_id = #{record.pProvinceId,jdbcType=BIGINT},
+      c_city_id = #{record.cCityId,jdbcType=BIGINT},
+      a_area_id = #{record.aAreaId,jdbcType=BIGINT},
+      detailed_address = #{record.detailedAddress,jdbcType=VARCHAR},
+      dest_name = #{record.destName,jdbcType=VARCHAR},
+      dest_iphone = #{record.destIphone,jdbcType=VARCHAR},
+      tag = #{record.tag,jdbcType=VARCHAR},
+      staus = #{record.staus,jdbcType=TINYINT},
+      if_default = #{record.ifDefault,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=BIGINT},
+      update_time = #{record.updateTime,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.live.liveteam.entity.AddressDest" >
+    update address_dest
+    <set >
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="cCountryId != null" >
+        c_country_id = #{cCountryId,jdbcType=BIGINT},
+      </if>
+      <if test="pProvinceId != null" >
+        p_province_id = #{pProvinceId,jdbcType=BIGINT},
+      </if>
+      <if test="cCityId != null" >
+        c_city_id = #{cCityId,jdbcType=BIGINT},
+      </if>
+      <if test="aAreaId != null" >
+        a_area_id = #{aAreaId,jdbcType=BIGINT},
+      </if>
+      <if test="detailedAddress != null" >
+        detailed_address = #{detailedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="destName != null" >
+        dest_name = #{destName,jdbcType=VARCHAR},
+      </if>
+      <if test="destIphone != null" >
+        dest_iphone = #{destIphone,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null" >
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="staus != null" >
+        staus = #{staus,jdbcType=TINYINT},
+      </if>
+      <if test="ifDefault != null" >
+        if_default = #{ifDefault,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.live.liveteam.entity.AddressDest" >
+    update address_dest
+    set open_id = #{openId,jdbcType=VARCHAR},
+      c_country_id = #{cCountryId,jdbcType=BIGINT},
+      p_province_id = #{pProvinceId,jdbcType=BIGINT},
+      c_city_id = #{cCityId,jdbcType=BIGINT},
+      a_area_id = #{aAreaId,jdbcType=BIGINT},
+      detailed_address = #{detailedAddress,jdbcType=VARCHAR},
+      dest_name = #{destName,jdbcType=VARCHAR},
+      dest_iphone = #{destIphone,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=VARCHAR},
+      staus = #{staus,jdbcType=TINYINT},
+      if_default = #{ifDefault,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
