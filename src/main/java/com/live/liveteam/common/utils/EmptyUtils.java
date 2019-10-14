@@ -18,7 +18,7 @@ import java.util.Map;
 public class EmptyUtils {
 
     public static void throwParamNull() {
-        throw new BizException(EnumResult.PARAM_NULL.getCode(), EnumResult.PARAM_NULL.getMsg());
+        throw new BizException(EnumResult.PARAM_NULL);
     }
 
     /**

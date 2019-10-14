@@ -2,6 +2,7 @@ package com.live.liveteam.service;
 
 import com.live.liveteam.common.result.ResultVO;
 import com.live.liveteam.common.result.SimpleResultVO;
+import com.live.liveteam.vo.CouponVO;
 
 import java.util.List;
 import java.util.Map;
@@ -13,18 +14,11 @@ import java.util.Map;
  */
 public interface CouponsService {
 
-    ResultVO<Integer> queryCouponsUsefulNumber(String openId);
+    ResultVO<Long> queryCouponsNumber(String openId, String goodsId, Long priceTotal);
 
-    ResultVO<Map> queryCouponsAll(String openId);
-
-    ResultVO<Long> queryCouponsOrderUsefulNumber(String openid, String goodsId);
-
-    ResultVO<List> queryCouponsOrderUseful(String openid, String goodsId);
+    ResultVO<List<CouponVO>> queryCouponsAll(String openId, Integer couponStatus, String goodsId, Long priceTotal);
 
     SimpleResultVO updateCouponsToUsed(Long id);
 
-    SimpleResultVO insertCouponsTypeReduce(String openId, Integer value, Integer threshold);
-
-    SimpleResultVO insertCouponsTypeExchange(String openId, Long goodsId);
-
+    SimpleResultVO updateCouponsToUunsed(Long id);
 }

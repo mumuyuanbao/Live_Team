@@ -137,6 +137,9 @@ public enum EnumResult {
     // 对Redis中的总积分修改失败
     SCORE_INSERT_REDIS_FAIL(200002, "积分信息更新到Redis失败"),
 
+    // 积分余额不足
+    SCORE_INSUFFICIENT(200003, "用户积分余额不足"),
+
 
     FAILED_TO_GENERATE_QR_CODE(2000300,"生成二维码失败"),
 

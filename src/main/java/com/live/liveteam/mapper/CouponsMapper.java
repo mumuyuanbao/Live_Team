@@ -3,9 +3,11 @@ package com.live.liveteam.mapper;
 import com.live.liveteam.entity.Coupons;
 import com.live.liveteam.entity.CouponsExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface CouponsMapper {
     long countByExample(CouponsExample example);
 

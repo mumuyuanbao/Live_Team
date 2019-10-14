@@ -1,5 +1,6 @@
 package com.live.liveteam;
 
+import com.live.liveteam.common.constant.BizConstant;
 import com.live.liveteam.common.enums.EnumScoreDetailInfo;
 import com.live.liveteam.common.result.ResultVO;
 import com.live.liveteam.common.utils.RedisUtil;
@@ -48,7 +49,13 @@ public class LiveteamApplicationTests {
 
     @Test
     public void test1() {
-        userScoreDetailService.insertScoreDetail("1", EnumScoreDetailInfo.GET_FROM_REGIST, -50);
+//        System.out.println(couponsService.queryCouponsNumber("oVg8a498k48UBlS5NQwMhMwGdjyo", "2,3,5", 7000L).getData());
+//        System.out.println(couponsService.queryCouponsAll("oVg8a498k48UBlS5NQwMhMwGdjyo", BizConstant.COUPON_UNUSED, null, null).getData().size());
+//        System.out.println(userScoreDetailService.insertScoreDetail("oVg8a498k48UBlS5NQwMhMwGdjyo", EnumScoreDetailInfo.GET_FROM_INVITE_USER));
+//        System.out.println(userScoreDetailService.insertScoreDetail("oVg8a498k48UBlS5NQwMhMwGdjyo", EnumScoreDetailInfo.GET_FROM_REGIST));
+//        System.out.println(userScoreDetailService.insertScoreDetail("oVg8a498k48UBlS5NQwMhMwGdjyo", EnumScoreDetailInfo.GET_FROM_SHARE_GOODS));
+        System.out.println(userScoreDetailService.queryTotalScore("oVg8a498k48UBlS5NQwMhMwGdjyo").getData());
+//        System.out.println(userScoreDetailService.insertScoreDetail("oVg8a498k48UBlS5NQwMhMwGdjyo", EnumScoreDetailInfo.LOSE_BY_BUY_GOODS, 30));
     }
 
 }

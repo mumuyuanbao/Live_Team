@@ -13,7 +13,9 @@ import com.live.liveteam.common.utils.EmptyUtils;
 import com.live.liveteam.common.utils.RedisUtil;
 import com.live.liveteam.entity.UserScoreDetail;
 import com.live.liveteam.entity.UserScoreDetailExample;
+import com.live.liveteam.entity.UserScoreRules;
 import com.live.liveteam.mapper.UserScoreDetailMapper;
+import com.live.liveteam.mapper.UserScoreRulesMapper;
 import com.live.liveteam.service.UserScoreDetailService;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,9 @@ public class UserScoreDetailServiceImpl implements UserScoreDetailService {
     @Autowired
     private UserScoreDetailMapper userScoreDetailMapper;
 
+    @Autowired
+    private UserScoreRulesMapper userScoreRulesMapper;
+
     /**
      * (前端)返回该用户所有的积分明细信息
      *
@@ -51,7 +56,7 @@ public class UserScoreDetailServiceImpl implements UserScoreDetailService {
         ResultVO<PageVO<UserScoreDetail>> result = new ResultVO<>();
         UserScoreDetailExample example = new UserScoreDetailExample();
         // 设定时间排序
-        example.setOrderByClause("score_get_time");
+        example.setOrderByClause("score_get_time desc");
         UserScoreDetailExample.Criteria criteria = example.createCriteria();
         criteria.andOpenIdEqualTo(openId);
         PageHelper.startPage(pageNum, pageSize);
@@ -82,7 +87,7 @@ public class UserScoreDetailServiceImpl implements UserScoreDetailService {
     }
 
     /**
-     * 返回当前用户的总积分 若用户无积分明细记录或用户不存在则抛出异常
+     * 返回当前用户的总积分
      *
      * @param openId 用户openId
      * @return 当前用户的总积分
@@ -95,46 +100,69 @@ public class UserScoreDetailServiceImpl implements UserScoreDetailService {
         }
         ResultVO<Integer> result = new ResultVO<>();
         String key = RedisUtil.USER_SCORE_STRING + openId;
+        Integer totalSco = 0;
         if (redisUtil.hasKey(key)) {
             Object totalScore = redisUtil.get(key);
-            result.setCode(EnumResult.SUCCESS.getCode());
-            result.setMsg(EnumResult.SUCCESS.getMsg());
-            result.setData((Integer) totalScore);
-            return result;
+            totalSco = (Integer) totalScore;
         } else {
             // 没有值时进数据库查询
             UserScoreDetailExample example = new UserScoreDetailExample();
             UserScoreDetailExample.Criteria criteria = example.createCriteria();
             criteria.andOpenIdEqualTo(openId);
             List<UserScoreDetail> details = userScoreDetailMapper.selectByExample(example);
-            // 判断是否存在该用户的积分明细数据
-            if (EmptyUtils.isEmpty(details)) {
-                result.setCode(EnumResult.SUCCESS.getCode());
-                result.setMsg(EnumResult.SUCCESS.getMsg());
-                result.setData(0);
-                return result;
-            } else {
-                // 若有则根据数据库中的明细数据计算出总积分放入redis
-                Integer totalSco = 0;
-                for (UserScoreDetail detail : details) {
-                    totalSco += detail.getScoreValue();
-                }
-                redisUtil.set(key, totalSco);
-                result.setCode(EnumResult.SUCCESS.getCode());
-                result.setMsg(EnumResult.SUCCESS.getMsg());
-                result.setData(totalSco);
-                return result;
+            // 若有则根据数据库中的明细数据计算出总积分放入redis
+            for (UserScoreDetail detail : details) {
+                totalSco += detail.getScoreValue();
             }
+            redisUtil.set(key, totalSco);
         }
+
+        result.setCode(EnumResult.SUCCESS.getCode());
+        result.setMsg(EnumResult.SUCCESS.getMsg());
+        result.setData(totalSco);
+        return result;
     }
 
     /**
-     * (后端使用)插入一条用户的积分明细数据
+     * 插入一条用户的积分增加明细数据
      *
      * @param openId 用户openId
      * @param info 积分明细产生方式
-     * @param value 积分明细产生的值
      * @return 插入结果
+     */
+    @Override
+    public SimpleResultVO insertScoreDetail(String openId, EnumScoreDetailInfo info) {
+        SimpleResultVO result = new SimpleResultVO();
+        if (openId == null || info == null) {
+            throw new BizException(EnumResult.PARAM_NULL);
+        }
+        // 对Redis中的总积分数据进行修改
+        String key = RedisUtil.USER_SCORE_STRING + openId;
+        // 查询积分规则
+        UserScoreRules userScoreRules = userScoreRulesMapper.selectByPrimaryKey(info.getId());
+        // 添加积分增加记录
+        UserScoreDetail detail = new UserScoreDetail(null, openId, userScoreRules.getRuleValue(),
+                info.getInfo(), DateUtils.getTimeStamp());
+        try {
+            // 该方法执行完redis中必有用户积分数据
+            queryTotalScore(openId);
+            // 添加积分明细到数据库
+            userScoreDetailMapper.insertSelective(detail);
+            redisUtil.incr(key, userScoreRules.getRuleValue());
+        } catch (Exception e) {
+            throw new BizException(EnumResult.SCORE_INSERT_DATABASE_FAIL);
+        }
+        result.setCode(EnumResult.SUCCESS.getCode());
+        result.setMsg(EnumResult.SUCCESS.getMsg());
+        return result;
+    }
+
+    /**
+     * 插入一条用户的积分减少明细数据
+     * @param openId 用户openId
+     * @param info 积分明细产生方式
+     * @param value 积分减少值 为积分真实减少值
+     * @return
      */
     @Override
     public SimpleResultVO insertScoreDetail(String openId, EnumScoreDetailInfo info, Integer value) {
@@ -142,35 +170,28 @@ public class UserScoreDetailServiceImpl implements UserScoreDetailService {
         if (openId == null || info == null || value == null) {
             throw new BizException(EnumResult.PARAM_NULL.getCode(), EnumResult.PARAM_NULL.getMsg());
         }
-        try {
-            // 添加积分明细到数据库
-            UserScoreDetail detail = new UserScoreDetail(null, openId, value,
-                    info.getInfo(), DateUtils.getTimeStamp());
-            userScoreDetailMapper.insertSelective(detail);
-        } catch (Exception e) {
-            throw new BizException(EnumResult.SCORE_INSERT_DATABASE_FAIL.getCode(), EnumResult.SCORE_INSERT_DATABASE_FAIL.getMsg());
+        // 对Redis中的总积分数据进行修改
+        String key = RedisUtil.USER_SCORE_STRING + openId;
+        // 查询积分规则
+        UserScoreRules userScoreRules = userScoreRulesMapper.selectByPrimaryKey(info.getId());
+        // 添加积分增加记录
+        UserScoreDetail detail = new UserScoreDetail(null, openId, -value,
+                info.getInfo(), DateUtils.getTimeStamp());
+        // 该方法执行完redis中必有用户积分数据
+        ResultVO<Integer> scoreRes = queryTotalScore(openId);
+        Integer score = scoreRes.getData();
+        if (value > score) {
+            throw new BizException(EnumResult.SCORE_INSUFFICIENT);
         }
         try {
-            // 对Redis中的总积分数据进行修改
-            String key = RedisUtil.USER_SCORE_STRING + openId;
-            // 判断在Redis中是否存在改用户的key
-            if (redisUtil.hasKey(key)) {
-                if (value > 0) {
-                    redisUtil.incr(key, value.longValue());
-                } else {
-                    redisUtil.decr(key, value.longValue());
-                }
-            } else {
-                // 不存在则创建
-                redisUtil.set(key, value);
-            }
+            // 添加积分明细到数据库
+            userScoreDetailMapper.insertSelective(detail);
+            redisUtil.decr(key, value);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new BizException(EnumResult.SCORE_INSERT_REDIS_FAIL.getCode(), EnumResult.SCORE_INSERT_REDIS_FAIL.getMsg());
+            throw new BizException(EnumResult.SCORE_INSERT_DATABASE_FAIL);
         }
         result.setCode(EnumResult.SUCCESS.getCode());
         result.setMsg(EnumResult.SUCCESS.getMsg());
         return result;
     }
-
 }

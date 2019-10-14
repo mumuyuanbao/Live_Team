@@ -22,6 +22,8 @@ public interface UserScoreDetailService {
 
     ResultVO<Integer> queryTotalScore(String openId);
 
+    SimpleResultVO insertScoreDetail(String openId, EnumScoreDetailInfo info);
+
     SimpleResultVO insertScoreDetail(String openId, EnumScoreDetailInfo info, Integer value);
 
 }

@@ -4,9 +4,11 @@ package com.live.liveteam.mapper;
 import com.live.liveteam.entity.UserScoreDetail;
 import com.live.liveteam.entity.UserScoreDetailExample;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface UserScoreDetailMapper {
     long countByExample(UserScoreDetailExample example);
 
